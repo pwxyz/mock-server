@@ -9,9 +9,15 @@ import { last } from 'lodash';
 const project = new Router({ prefix: 'project' });
 
 project.post('/', async ctx => {
-  const obj = getArg(ctx.request.body, ['title', 'description', 'version']);
+  let obj = getArg(ctx.request.body, ['title', 'description', 'version']);
+  if (obj['version'] && !checkVersion(obj['version'])) {
+    ctx.body = {
+      code: 401,
+      message: 'version字段不符合格式',
+    };
+    return;
+  }
   const data = await Project.create(obj);
-  console.log(data);
   const datas = await Project.find({ title: obj['title'] });
   if (datas.length >= 2) {
     await Project.findByIdAndRemove(data['_id']);
@@ -35,7 +41,6 @@ project.post('/version', async ctx => {
   let data = await Project.findById(obj['id']);
   let oldVersion = last(data['version']);
   let canAdd = checkVersion(obj['version'], oldVersion);
-  console.log(canAdd, oldVersion, obj['version']);
   if (canAdd) {
     let objs = { ...obj, version: data['version'].concat(obj['version']), ...getUpdateTime() };
     let datas = await Project.findByIdAndUpdate(obj['id'], objs, { new: true });
