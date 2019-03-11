@@ -1,7 +1,7 @@
 
 import * as Koa from 'koa';
 import * as Cors from 'koa-cors';
-import * as body from 'koa-bodyparser';
+import * as body from 'koa-body';
 import * as dotenv from 'dotenv';
 
 import router from './routers';
