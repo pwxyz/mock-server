@@ -1,23 +1,22 @@
 
-
-import * as Koa from 'koa'
+import * as Koa from 'koa';
 import * as Cors from 'koa-cors';
-import * as bodyParser from 'koa-bodyParser';
+import * as body from 'koa-bodyparser';
 import * as dotenv from 'dotenv';
 
 import router from './routers';
 
 dotenv.config();
 
-require('./db')
+require('./db');
 
 const app = new Koa();
-const port = process.env.PORT|| 3364;
+const port = process.env.PORT || 3364;
 
 app.use(Cors());
-app.use(bodyParser());
+app.use(body());
 app.use(router.routes());
 app.use(router.allowedMethods());
 
 
-app.listen(port, () => { console.log(`this app is running on ${port}`)} );
+app.listen(port, () => { console.log(`this app is running on ${port}`) });

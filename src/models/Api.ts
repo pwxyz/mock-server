@@ -1,5 +1,4 @@
 
-
 import * as mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
@@ -22,7 +21,9 @@ const apiSchem = new Schema({
   res: {
     type: Object
   }
-})
+});
+
+const Api = mongoose.model('Api', apiSchem);
 
 
-export default apiSchem;
+export default Api;

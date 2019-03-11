@@ -1,15 +1,31 @@
 
-
 import * as mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
 
-const projectSchema = new Schema({ 
-  name: { type: String, required: true },
+
+const projectSchema = new Schema({
+  title: { type: String, required: true, unique: true },
   description: { type: String },
-  created_at: { type: Number, default: 0 },
-  updated_at: { type: Number, default: this.createdAt }
- })
+  version: { type: Array, default: ['v0.0.1'] },
+  created_at: { type: Number, default: Number(new Date()) },
+  updated_at: {
+    type: Number, default: function() {
+      return this.created_at;
+    }
+  }
+});
+
+projectSchema.pre('save', async function() {
+  console.log('pre', this);
+});
+
+projectSchema.post('save', async function() {
+  console.log('post', this);
+});
+
+const Project = mongoose.model('Project', projectSchema);
 
 
- export default projectSchema;
+
+export default Project;

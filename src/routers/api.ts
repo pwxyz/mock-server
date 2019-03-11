@@ -1,14 +1,13 @@
 
-
 import * as Router from 'koa-router';
 import Api from '../models/Api';
 
-const api = new Router({ prefix:'api' });
+const api = new Router({ prefix: 'api' });
 
 const obj = {
-  path:'login',
+  path: 'login',
   method: 'get',
-  tag:'登录',
+  tag: '登录',
   version: 'v0.0.1',
   req: [
     {
@@ -45,7 +44,7 @@ const obj = {
         data: {
           type: 'array',
           items: {
-            ids:{
+            ids: {
               type: 'string',
               description: 'ids',
               kind: 'ids'
@@ -55,17 +54,17 @@ const obj = {
       }
     }
   }
-}
+};
 
 
 api.post('/', async ctx => {
 
 
-  ctx.body={
+  ctx.body = {
     code: 201,
     message: '增加成功'
-  }
-})
+  };
+});
 
 
 export default api;

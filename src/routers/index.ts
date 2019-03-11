@@ -1,13 +1,12 @@
 
-
 import * as Router from 'koa-router';
-import login from './login';
-import api from './api';
+import getFileList from '../utils/getFileList';
 
 const router = new Router();
 
+const array = getFileList(__dirname).map(i => i.routes());
 
-router.use('/', login.routes(), api.routes());
+router.use('/', ...array);
 
 
 export default router;
