@@ -1,6 +1,9 @@
 
 import * as Router from 'koa-router';
 import Project from '../models/Project';
+import Tag from '../models/Tag';
+
+import copy from '../utils/copy';
 import getArg from '../utils/getArg';
 import getUpdateTime from '../utils/getUpdateTime';
 import checkVersion from '../utils/checkVersion';
@@ -45,6 +48,15 @@ project.post('/version', async ctx => {
     let objs = { ...obj, version: data['version'].concat(obj['version']), ...getUpdateTime() };
     let datas = await Project.findByIdAndUpdate(obj['id'], objs, { new: true });
     if (datas) {
+      //将旧版本的tag复制到新版本去
+      let oldVersionTags = await Tag.find({ blongTo: obj['id'], version: oldVersion }).select('-_id -createdAt -updatedAt');
+      let newVersionTags = oldVersionTags.map(i => {
+        let item = copy(i);
+        item['version'] = obj['version'];
+        return item;
+      });
+      await Tag.create(...newVersionTags);
+
       ctx.body = {
         code: 201,
         message: '增加版本号成功'

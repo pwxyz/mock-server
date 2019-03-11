@@ -11,4 +11,5 @@ it('测试checkVersion', () => {
   expect(checkVersion(str1, str2)).toBe(false);
   expect(checkVersion(str3, str1)).toBe(true);
   expect(checkVersion(str4)).toBe(false);
+  expect(checkVersion(str1, str1)).toBe(false);
 });

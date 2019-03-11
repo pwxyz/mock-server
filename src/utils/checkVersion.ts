@@ -8,7 +8,7 @@ import { isUndefined } from 'lodash';
  */
 const checkVersion = (newVersion: string, oldVersion = 'v0.0.0'): boolean => {
   let canUse = true;
-  if (!checkVersionType(newVersion)) {
+  if (!checkVersionType(newVersion) || newVersion === oldVersion) {
     canUse = false;
     return canUse;
   }
