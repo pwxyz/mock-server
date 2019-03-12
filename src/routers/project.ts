@@ -49,10 +49,12 @@ project.post('/version', async ctx => {
     let datas = await Project.findByIdAndUpdate(obj['id'], objs, { new: true });
     if (datas) {
       //将旧版本的tag复制到新版本去
-      let oldVersionTags = await Tag.find({ blongTo: obj['id'], version: oldVersion }).select('-_id -createdAt -updatedAt');
+      let oldVersionTags = await Tag.find({ blongTo: obj['id'], version: oldVersion }).select('-createdAt -updatedAt');
       let newVersionTags = oldVersionTags.map(i => {
         let item = copy(i);
+        item['oldVersionId'] = item['_id'];
         item['version'] = obj['version'];
+        delete item['_id'];
         return item;
       });
       await Tag.create(...newVersionTags);

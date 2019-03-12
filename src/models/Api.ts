@@ -8,7 +8,11 @@ const Schema = mongoose.Schema;
 const apiSchem = new Schema({
   path: { type: String },
   method: { type: String },
-  tag: { type: String },  //tagid
+  tag: {
+    name: { type: String },
+    keys: { type: String },
+    id: { type: mongoose.Schema.Types.ObjectId }
+  },  //tagid
   version: { type: String },
   req: [{
     in: { type: String },

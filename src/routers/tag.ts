@@ -8,7 +8,7 @@ import { includes } from 'lodash';
 const tag = new Router({ prefix: 'tag' });
 
 tag.post('/', async ctx => {
-  const obj = getArg(ctx.request.body, ['blongTo', 'version', 'name', 'keys']);
+  const obj = getArg(ctx.request.body, ['blongTo', 'version', 'name', 'keys', 'test']);
   let have = await Project.findById(obj['blongTo']);
   console.log(have);
   if (!have || (!!have && !includes(have['version'], obj['version']))) {
@@ -61,6 +61,15 @@ tag.del('/', async ctx => {
   ctx.body = {
     code: 201,
     message: '删除成功'
+  };
+});
+
+tag.get('/x', async ctx => {
+  let data = await Tag.find({ 'test.name': '123' });
+  ctx.body = {
+    code: 200,
+    message: data ? '获取成功' : '获取失败',
+    data
   };
 });
 

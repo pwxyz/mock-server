@@ -1,14 +1,20 @@
 
 import * as Router from 'koa-router';
 import Api from '../models/Api';
+import getArg from '../utils/getArg';
 
 const api = new Router({ prefix: 'api' });
 
 const obj = {
   path: 'login',
   method: 'get',
-  tag: '登录',
+  tag: {
+    name: '威胁分析1',
+    keys: 'analyse1',
+    id: '5c862b3505862e63682749e8'
+  },
   version: 'v0.0.1',
+  blongTo: '5c862b2705862e63682749e6',
   req: [
     {
       in: 'body',
@@ -58,7 +64,7 @@ const obj = {
 
 
 api.post('/', async ctx => {
-
+  let obj = getArg(ctx.request.body, ['res', 'path', 'version', 'method', 'tag', 'req', 'blongTo']);
 
   ctx.body = {
     code: 201,

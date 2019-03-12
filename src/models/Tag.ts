@@ -7,8 +7,13 @@ const tagSchem = new Schema({
   keys: { type: String },
   blongTo: { type: mongoose.SchemaTypes.ObjectId },
   version: { type: String },
+  oldVersionId: { type: mongoose.SchemaTypes.ObjectId, default: null },
   createdAt: { type: Number, default: Number(new Date()) },
-  updatedAt: { type: Number, default: this.createdAt }
+  updatedAt: {
+    type: Number, default: function() {
+      return this.createdAt;
+    }
+  }
 });
 
 const Tag = mongoose.model('Tag', tagSchem);
