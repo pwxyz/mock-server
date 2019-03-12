@@ -17,6 +17,14 @@ api.post('/', async ctx => {
     };
     return;
   }
+  let duplicateCheck = await Api.find({ blongTo: obj['blongTo'], version: obj['version'], method: obj['method'], path: obj['path'] });
+  if (duplicateCheck) {
+    ctx.body = {
+      code: 401,
+      message: '当前api方法、版本、路径重复，请修改后再试'
+    };
+    return;
+  }
   let data = await Api.create(obj);
   ctx.body = {
     code: 201,
