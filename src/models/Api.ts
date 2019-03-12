@@ -11,7 +11,7 @@ const apiSchem = new Schema({
   tag: {
     name: { type: String },
     keys: { type: String },
-    id: { type: mongoose.Schema.Types.ObjectId }
+    id: { type: mongoose.SchemaTypes.ObjectId }
   },  //tagid
   version: { type: String },
   req: [{
@@ -24,6 +24,12 @@ const apiSchem = new Schema({
   }],
   res: {
     type: Object
+  },
+  createdAt: { type: Number, default: Number(new Date()) },
+  updatedAt: {
+    type: Number, default: function() {
+      return this.createdAt;
+    }
   }
 });
 

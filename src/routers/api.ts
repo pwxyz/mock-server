@@ -5,72 +5,56 @@ import getArg from '../utils/getArg';
 
 const api = new Router({ prefix: 'api' });
 
-const obj = {
-  path: 'login',
-  method: 'get',
-  tag: {
-    name: '威胁分析1',
-    keys: 'analyse1',
-    id: '5c862b3505862e63682749e8'
-  },
-  version: 'v0.0.1',
-  blongTo: '5c862b2705862e63682749e6',
-  req: [
-    {
-      in: 'body',
-      name: 'name',
-      require: true,
-      type: 'string',
-      description: '登录名',
-      kind: 'name'
-    },
-    {
-      in: 'body',
-      name: 'password',
-      require: true,
-      type: 'string',
-      description: '密码',
-      kind: null
-    }
-  ],
-  res: {
-    code: {
-      type: 'string',
-      value: 201,
-      kind: null,
-    },
-    message: {
-      type: 'string',
-      value: '错误信息',
-      kind: null,
-    },
-    payload: {
-      type: 'object',
-      properties: {
-        data: {
-          type: 'array',
-          items: {
-            ids: {
-              type: 'string',
-              description: 'ids',
-              kind: 'ids'
-            }
-          }
-        }
-      }
-    }
-  }
-};
 
+//在输入数据中，目前暂不考虑校验数据格式，在生成mock数据时，错误的给出标记即可
 
 api.post('/', async ctx => {
   let obj = getArg(ctx.request.body, ['res', 'path', 'version', 'method', 'tag', 'req', 'blongTo']);
-
+  if (!obj['version']) {
+    ctx.body = {
+      code: 401,
+      message: 'version为必填项'
+    };
+    return;
+  }
+  let data = await Api.create(obj);
   ctx.body = {
     code: 201,
-    message: '增加成功'
+    message: data ? '增加成功' : '增加失败',
+    data
   };
 });
 
+//暂不考虑支持单独api升级或者修改版本
+api.put('/', async ctx => {
+  let obj = getArg(ctx.request.body, ['res', 'path', 'method', 'tag', 'req', 'blongTo', 'id']);
+  let id = obj['id'];
+  delete obj['id'];
+  let data = await Api.findOneAndUpdate(id, obj, { new: true });
+  ctx.body = {
+    code: 201,
+    message: data ? '修改成功' : '修改失败',
+    data
+  };
+});
+
+api.del('/', async ctx => {
+  let obj = getArg(ctx.request.body, ['id']);
+  try {
+    await Api.findByIdAndRemove(obj['id']);
+    ctx.body = {
+      code: 201,
+      message: '删除成功'
+    };
+  }
+  catch (err) {
+    ctx.body = {
+      code: 402,
+      message: '删除失败',
+      err
+    };
+  }
+
+});
 
 export default api;
