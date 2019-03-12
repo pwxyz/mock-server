@@ -3,7 +3,7 @@ import * as mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
 
-//kind 根据此类型生成模拟数据
+//kind 根据此类型生成模拟数据,在res中
 
 const apiSchem = new Schema({
   path: { type: String },
@@ -14,13 +14,14 @@ const apiSchem = new Schema({
     id: { type: mongoose.SchemaTypes.ObjectId }
   },  //tagid
   version: { type: String },
+  blongTo: { type: mongoose.SchemaTypes.ObjectId },
   req: [{
     in: { type: String },
     name: { type: String },
     require: { type: Boolean },
     type: { type: String },
     description: { type: String },
-    kind: { type: String }
+    // kind: { type: String }
   }],
   res: {
     type: Object
