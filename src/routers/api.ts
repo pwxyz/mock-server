@@ -18,19 +18,23 @@ api.post('/', async ctx => {
     return;
   }
   let duplicateCheck = await Api.find({ blongTo: obj['blongTo'], version: obj['version'], method: obj['method'], path: obj['path'] });
-  if (duplicateCheck) {
+  if (duplicateCheck.length) {
     ctx.body = {
       code: 401,
-      message: '当前api方法、版本、路径重复，请修改后再试'
+      message: '当前api方法、版本、路径重复，请修改后再试',
+      duplicateCheck
     };
     return;
   }
-  let data = await Api.create(obj);
-  ctx.body = {
-    code: 201,
-    message: data ? '增加成功' : '增加失败',
-    data
-  };
+  else {
+    let data = await Api.create(obj);
+    ctx.body = {
+      code: 201,
+      message: data ? '增加成功' : '增加失败',
+      data
+    };
+  }
+
 });
 
 //暂不考虑支持单独api升级或者修改版本
