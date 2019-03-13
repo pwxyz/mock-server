@@ -2,6 +2,7 @@
 import * as Router from 'koa-router';
 import Api from '../models/Api';
 import getArg from '../utils/getArg';
+import getUpdateTime from '../utils/getUpdateTime';
 
 const api = new Router({ prefix: 'api' });
 
@@ -38,11 +39,12 @@ api.post('/', async ctx => {
 });
 
 //暂不考虑支持单独api升级或者修改版本
-api.put('/', async ctx => {
-  let obj = getArg(ctx.request.body, ['res', 'path', 'method', 'tag', 'req', 'blongTo', 'id']);
-  let id = obj['id'];
-  delete obj['id'];
-  let data = await Api.findOneAndUpdate(id, obj, { new: true });
+api.put('/:id', async ctx => {
+  let obj = getArg(ctx.request.body, ['res', 'path', 'method', 'tag', 'req', 'blongTo']);
+  // let id = obj['id'];
+  let id = ctx.params['id'];
+  // delete obj['id'];
+  let data = await Api.findOneAndUpdate(id, { ...obj, ...getUpdateTime() }, { new: true });
   ctx.body = {
     code: 201,
     message: data ? '修改成功' : '修改失败',
@@ -50,10 +52,11 @@ api.put('/', async ctx => {
   };
 });
 
-api.del('/', async ctx => {
-  let obj = getArg(ctx.request.body, ['id']);
+api.del('/:id', async ctx => {
+  // let obj = getArg(ctx.request.body, ['id']);
+  let id = ctx.params['id'];
   try {
-    await Api.findByIdAndRemove(obj['id']);
+    await Api.findByIdAndRemove(id);
     ctx.body = {
       code: 201,
       message: '删除成功'
