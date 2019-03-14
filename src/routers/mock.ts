@@ -1,6 +1,7 @@
 
 import * as Router from 'koa-router';
 import Api from '../models/Api';
+import Cache from '../models/Cache';
 import mockRes from '../utils/mockRes';
 import { isUndefined } from 'util';
 
@@ -14,12 +15,14 @@ const checkArg = (arr1: object[], arr2: string[]) => {
 
 const objToArr = (obj: object) => Object.keys(obj).filter(i => !isUndefined(i));
 
-mock.all('/:projectId/:version', async ctx => {
+mock.all('/:projectId/:version/:path\*', async ctx => {
   let projectId = ctx.params['projectId'];
   let version = ctx.params['version'];
+  let path = ctx.params['path'];
+  console.log('path', path);
   let method = ctx.method.toLowerCase();
   let headerArg = ctx.header;
-  let apiData = await Api.findOne({ blongTo: projectId, version, method });
+  let apiData = await Api.findOne({ blongTo: projectId, version, method, path });
   let obj = ctx.request.body;
   let limit = obj['limit'] || 1;
   if (apiData) {
@@ -27,7 +30,9 @@ mock.all('/:projectId/:version', async ctx => {
     let arr = [...objToArr(headerArg), ...objToArr(obj)];
     let array = checkArg(apiData['req'], arr);
     if (array.length === 0) {
-      ctx.body = mockRes(apiData['res'], obj, limit);
+      let res = mockRes(apiData['res'], obj, limit);
+      ctx.body = res;
+      Cache.create({ projectId, version, path, res });
     }
     else {
       ctx.body = {
