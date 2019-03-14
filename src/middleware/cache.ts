@@ -1,16 +1,27 @@
 
 // import { getCache, setCache } from '../utils/cache';
 // import getArg from '../utils/getArg';
-
-//暂时不需要使用缓存
+// import Cache from '../models/Cache';
 
 const cache = async (ctx, next) => {
-  let path = ctx.url;
-  if (/mock\/.+\/.+/.test(path)) {
-    // let method = ctx.request.method;
-    // let version = ctx.request.body['version'];
+  let url = ctx.url;
+
+
+  if (/mock\/.+\/.+/.test(url)) {
+
+    // let customRes = await findCache({ projectId, method, version, path });
+    // if (customRes) {
+    //   ctx.body = customRes['res'];
+    //   return;
+    // }
+
+    await next();
+
+
   }
-  await next();
+  else {
+    next();
+  }
 
 };
 

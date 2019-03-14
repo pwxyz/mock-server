@@ -10,9 +10,9 @@ const cacheSchema = new Schema({
   path: { type: String },
   res: { type: Object },
   createdAt: { type: Number, default: Number(new Date()) },
-  exprieIn: { type: Number, default: Number(new Date()) + 60 * 1000 },
-  commonCache: { type: Boolean, default: true }
-});
+  exprieIn: { type: Number, default: Number(new Date()) + 10 * 60 * 1000 },
+  commonCache: { type: Boolean, default: true } //是否为常规缓存
+}, { capped: { size: 1024, max: 100, autoIndexId: true }});
 
 const cache = mongoose.model('Cache', cacheSchema);
 
