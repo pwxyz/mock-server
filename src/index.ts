@@ -4,7 +4,7 @@ import * as Cors from 'koa-cors';
 import * as body from 'koa-body';
 import * as dotenv from 'dotenv';
 import cache from './middleware/cache';
-
+import * as path from 'path';
 import router from './routers';
 
 dotenv.config();
@@ -15,7 +15,13 @@ const app = new Koa();
 const port = process.env.PORT || 3364;
 
 app.use(Cors());
-app.use(body());
+app.use(body({
+  multipart: true,
+  formidable: {
+    uploadDir: path.join(__dirname, '/uploads')
+  }
+}));
+// app.use(body());
 app.use(cache);
 app.use(router.routes());
 app.use(router.allowedMethods());

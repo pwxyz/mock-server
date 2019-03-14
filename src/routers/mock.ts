@@ -7,6 +7,7 @@ import { isUndefined } from 'util';
 import getArg from '../utils/getArg';
 import { getCache, setCache } from '../utils/cache';
 
+
 const mock = new Router({ prefix: 'mock' });
 
 //检查必须包含的参数(body与header中的参数一起检查)
@@ -41,16 +42,24 @@ mock.get('/cache', async ctx => {
   };
 });
 
+mock.post('/uploads', async ctx => {
+  console.log('xx', JSON.stringify(ctx.request.body), ctx.request['files']);
+  ctx.body = {
+    code: 200
+  };
+});
+
 mock.all('/:projectId/:version/:path\*', async ctx => {
   let projectId = ctx.params['projectId'];
   let version = ctx.params['version'];
   let path: string = '/' + ctx.params['path'];
-  console.log('path', path);
   let method = ctx.method.toLowerCase();
   let headerArg = ctx.header;
   try {
     let apiData = await Api.findOne({ blongTo: projectId, version, method, path });
     let obj = ctx.request.body;
+    let xx = await Api.find();
+    console.log(apiData, { blongTo: projectId, version, method, path }, xx);
     let limit = obj['limit'] || 1;
     if (apiData) {
       //检查必须的参数
@@ -80,7 +89,8 @@ mock.all('/:projectId/:version/:path\*', async ctx => {
   catch (err) {
     ctx.body = {
       status: -1,
-      message: '当前api不存在'
+      message: '当前api不存在',
+      err
     };
     return;
   }

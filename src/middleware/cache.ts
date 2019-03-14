@@ -20,7 +20,7 @@ const cache = async (ctx, next) => {
 
   }
   else {
-    next();
+    await next();
   }
 
 };
