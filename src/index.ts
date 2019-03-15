@@ -18,7 +18,13 @@ app.use(Cors());
 app.use(body({
   multipart: true,
   formidable: {
-    uploadDir: path.join(__dirname, '/uploads')
+    uploadDir: path.join(__dirname, '/uploads'),
+    hash: 'md5',
+    onFileBegin: function(name, file) {
+      console.log('fileBegin', file, name);
+      // return file.name;
+      file.path += file.name;
+    }
   }
 }));
 // app.use(body());

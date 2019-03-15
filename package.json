@@ -16,6 +16,7 @@
     "@types/koa-router": "^7.0.39",
     "@types/mongoose": "^5.3.20",
     "babel-eslint": "^10.0.1",
+    "busboy": "^0.3.0",
     "dotenv": "^6.2.0",
     "jsonwebtoken": "^8.5.0",
     "koa": "^2.7.0",

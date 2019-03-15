@@ -6,7 +6,8 @@ import mockRes from '../utils/mockRes';
 import { isUndefined } from 'util';
 import getArg from '../utils/getArg';
 import { getCache, setCache } from '../utils/cache';
-
+import uploadFile from '../utils/uploadFile';
+import * as path from 'path';
 
 const mock = new Router({ prefix: 'mock' });
 
@@ -43,10 +44,51 @@ mock.get('/cache', async ctx => {
 });
 
 mock.post('/uploads', async ctx => {
-  console.log('xx', JSON.stringify(ctx.request.body), ctx.request['files']);
+  // console.log('xx', JSON.stringify(ctx.request.body), JSON.stringify(ctx.request));
+  // let pathName = path.join(__dirname, 'uploads');
+  // let result = await uploadFile(ctx, { pathName });
+  const fields = ctx.request.body.fields; // this will be undefined for file uploads
+  const files = ctx.request.files;
+  console.log('files', JSON.stringify(files, null, 2));
   ctx.body = {
-    code: 200
+    code: 200,
+    fields: fields,
+    files: files,
+    data: JSON.stringify(ctx.request.body)
   };
+});
+
+mock.get('/test', async ctx => {
+  let html = `<form  enctype="multipart/form-data" id='form' >
+  <input type="file" id='file' />
+  <button type="submit" id='submit' >提交</button>
+</form>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+let submit = document.getElementById('submit')
+submit.onclick = e => {
+  e.preventDefault();
+  let input = document.getElementById('file');
+  let file = input.files[0]
+  let data = new FormData();
+  data.append('file',file )
+  axios({ method: 'post', url: '/mock/uploads', data }).then(res =>console.log(res.data))
+}
+</script>`;
+  ctx.body = html;
+
+
+//   ctx.body = `
+// <!doctype html>
+// <html>
+//   <body>
+//     <form action="/mock/uploads" enctype="multipart/form-data" method="post">
+//     <input type="text" name="username" placeholder="username"><br>
+//     <input type="text" name="title" placeholder="title of file"><br>
+//     <input type="file" name="uploads" multiple="multiple"><br>
+//     <button type="submit">Upload</button>
+//   </body>
+// </html>`;
 });
 
 mock.all('/:projectId/:version/:path\*', async ctx => {

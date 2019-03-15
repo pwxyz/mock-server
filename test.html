@@ -17,13 +17,12 @@
       e.preventDefault();
       let input = document.getElementById('file');
       let file = input.files[0]
-      console.log(file)
+      let data = new FormData();
+      data.append('file', file);
+      console.log(data.get('file'))
       fetch('http://localhost:3366/mock/uploads', 
           { method: 'POST',
-            body: file,
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            }
+            body: data
           })
       .then(res => res.json())
       .then(res => console.log(res) )
