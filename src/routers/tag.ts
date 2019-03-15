@@ -1,28 +1,17 @@
 
 import * as Router from 'koa-router';
 import Tag from '../models/Tag';
-import Project from '../models/Project';
 import getArg from '../utils/getArg';
-import { includes } from 'lodash';
+import addTag from '../actions/addTag';
 
 const tag = new Router({ prefix: 'tag' });
 
 tag.post('/', async ctx => {
-  const obj = getArg(ctx.request.body, ['blongTo', 'version', 'name', 'keys', 'test']);
-  let have = await Project.findById(obj['blongTo']);
-  console.log(have);
-  if (!have || (!!have && !includes(have['version'], obj['version']))) {
-    ctx.body = {
-      code: 402,
-      message: '不存在该项目或该版本'
-    };
-    return;
-  }
-  await Tag.create({ ...obj });
 
+  let { err, message } = await addTag(ctx.request.body);
   ctx.body = {
-    code: 201,
-    message: '增加成功'
+    code: err ? 401 : 201,
+    message
   };
 });
 

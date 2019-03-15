@@ -8,34 +8,17 @@ import getArg from '../utils/getArg';
 import getUpdateTime from '../utils/getUpdateTime';
 import checkVersion from '../utils/checkVersion';
 import { last } from 'lodash';
+import addProject from '../actions/addProject';
 
 const project = new Router({ prefix: 'project' });
 
 project.post('/', async ctx => {
-  let obj = getArg(ctx.request.body, ['title', 'description', 'version']);
-  if (obj['version'] && !checkVersion(obj['version'])) {
-    ctx.body = {
-      code: 401,
-      message: 'version字段不符合格式',
-    };
-    return;
-  }
-  const data = await Project.create(obj);
-  const datas = await Project.find({ title: obj['title'] });
-  if (datas.length >= 2) {
-    await Project.findByIdAndRemove(data['_id']);
-    ctx.body = {
-      code: 401,
-      message: 'title字段重复',
-    };
-  }
-  else {
-    ctx.body = {
-      code: 201,
-      message: '新增项目成功',
-      data
-    };
-  }
+
+  let { message, err } = await addProject(ctx.request.body);
+  ctx.body = {
+    code: err ? 401 : 201,
+    message
+  };
 
 });
 //增加版本
@@ -67,7 +50,7 @@ project.post('/version', async ctx => {
     else {
       ctx.body = {
         code: 403,
-        message: '增加版本号失败1'
+        message: '增加版本号失败'
       };
     }
   }

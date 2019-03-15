@@ -21,8 +21,6 @@ app.use(body({
     uploadDir: path.join(__dirname, '/uploads'),
     hash: 'md5',
     onFileBegin: function(name, file) {
-      console.log('fileBegin', file, name);
-      // return file.name;
       file.path += file.name;
     }
   }
