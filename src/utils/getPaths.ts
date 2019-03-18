@@ -1,7 +1,7 @@
 
 import { isObject, isArray } from 'lodash';
 
-const getApis = (paths, definitions) => {
+const getPaths = (paths, definitions) => {
   if (isArray(paths)) {
     let array = JSON.parse(JSON.stringify(paths)).map(i => transFrom(i, definitions));
     return array;
@@ -27,7 +27,7 @@ const transFrom = (arg, definitions: object, key?: string) => {
     transformString(arg, definitions);
 };
 
-const transformArray = (arr: any[], definitions: object) => arr.map(i => (isObject(i) ? getApis(i, definitions) : i));
+const transformArray = (arr: any[], definitions: object) => arr.map(i => (isObject(i) ? getPaths(i, definitions) : i));
 
 const transformObject = (obj: object, definitions: object, key: string) => {
   let newKey = key;
@@ -37,15 +37,15 @@ const transformObject = (obj: object, definitions: object, key: string) => {
     newKey = obj['$ref'].replace('#/definitions/', '');
   }
   let objs = needDef ? definitions[newKey] : obj;
-  return getApis(objs, definitions);
+  return getPaths(objs, definitions);
 };
 
 const transformString = (str: string, definitions: object) => {
   let needTransform = typeof str === 'string' && /\#\/definitions/.test(str);
   let newKey = needTransform ? str.replace('#/definitions/', '') : '';
-  let objs = needTransform ? getApis(definitions[newKey], definitions) : str;
+  let objs = needTransform ? getPaths(definitions[newKey], definitions) : str;
   return objs;
 };
 
 
-export default getApis;
+export default getPaths;

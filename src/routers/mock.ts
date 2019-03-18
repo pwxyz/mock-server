@@ -6,8 +6,14 @@ import mockRes from '../utils/mockRes';
 import { isUndefined } from 'util';
 import getArg from '../utils/getArg';
 import { getCache, setCache } from '../utils/cache';
-import uploadFile from '../utils/uploadFile';
-import * as path from 'path';
+import * as fs from 'fs';
+import addProject from '../actions/addProject';
+import addTag from '../actions/addTag';
+import getPaths from '../utils/getPaths';
+import unfoldPath from '../utils/unfoldPaths';
+import Tag from '../models/Tag';
+import addApi from '../actions/addApi';
+import api from './api';
 
 const mock = new Router({ prefix: 'mock' });
 
@@ -44,12 +50,8 @@ mock.get('/cache', async ctx => {
 });
 
 mock.post('/uploads', async ctx => {
-  // console.log('xx', JSON.stringify(ctx.request.body), JSON.stringify(ctx.request));
-  // let pathName = path.join(__dirname, 'uploads');
-  // let result = await uploadFile(ctx, { pathName });
   const fields = ctx.request.body.fields; // this will be undefined for file uploads
   const files = ctx.request.files;
-  console.log('files', JSON.stringify(files, null, 2));
   ctx.body = {
     code: 200,
     fields: fields,
@@ -70,9 +72,10 @@ submit.onclick = e => {
   e.preventDefault();
   let input = document.getElementById('file');
   let file = input.files[0]
+  console.log(file)
   let data = new FormData();
   data.append('file',file )
-  axios({ method: 'post', url: '/mock/uploads', data }).then(res =>console.log(res.data))
+  axios({ method: 'post', url: '/mock/uploads', data:data }).then(res =>console.log(res.data))
 }
 </script>`;
   ctx.body = html;
@@ -91,28 +94,88 @@ submit.onclick = e => {
 // </html>`;
 });
 
+mock.get('/import', async ctx => {
+  let uploadData = fs.readFileSync(`G:/demo/mock-server/src/uploads/upload_39d146be478b6aed4d478dc6629894d8attack.json`, 'utf-8');
+  uploadData = JSON.parse(uploadData);
+  let projectObj = {
+    title: uploadData['info']['title'],
+    version: uploadData['info']['version'] || 'v0.0.1',
+    description: uploadData['info']['description'] || ''
+  };
+
+  let { message, err, data } = await addProject(projectObj);
+  if (err) {
+    ctx.body = {
+      code: 401,
+      message
+    };
+    return;
+  }
+  let tagArg: object[] = uploadData['tags'].map(i => {
+    let item = {};
+    item['name'] = i['description'];
+    item['keys'] = i['name'];
+    item['blongTo'] = data['_id'];
+    item['version'] = projectObj['version'];
+    return item;
+  });
+  await Promise.all(tagArg.map(i => addTag));
+
+  let obj = getPaths(uploadData['paths'], uploadData['definitions']);
+  let arr = unfoldPath(obj);
+  // console.log(arr.length);
+  arr.map(i => {
+    i['blongTo'] = data['_id'];
+    i['version'] = projectObj['version'];
+    i['tag'] = Tag.find({ keys: i['tag'], version: projectObj['version'], blongTo: data['_id'] });
+    return i;
+  });
+  let apiArr = [];
+  for (let i = 0; i < arr.length; i++) {
+    let item = await addApi(arr[i]);
+    if (item.err) {
+      apiArr.push(item);
+    }
+  }
+  ctx.body = {
+    code: 201,
+    message: '成功',
+    apiArr,
+    num: apiArr.length
+  };
+});
+
 mock.all('/:projectId/:version/:path\*', async ctx => {
   let projectId = ctx.params['projectId'];
   let version = ctx.params['version'];
   let path: string = '/' + ctx.params['path'];
   let method = ctx.method.toLowerCase();
   let headerArg = ctx.header;
+
   try {
     let apiData = await Api.findOne({ blongTo: projectId, version, method, path });
     let obj = ctx.request.body;
-    let xx = await Api.find();
-    console.log(apiData, { blongTo: projectId, version, method, path }, xx);
+
     let limit = obj['limit'] || 1;
     if (apiData) {
       //检查必须的参数
+
       let arr = [...objToArr(headerArg), ...objToArr(obj)];
       let array = checkArg(apiData['req'], arr);
       if (array.length === 0) {
         let key = getKey({ projectId, version, path, method });
-        let haveCache = await getCache(key);
-        let res = haveCache ? haveCache : mockRes(apiData['res'], obj, limit);
-        ctx.body = res;
-        Cache.create({ projectId, version, path, res, method });
+        try {
+          let haveCache = await getCache(key);
+          console.log('haveCache', haveCache, obj);
+          let res = haveCache ? haveCache : mockRes(apiData['res'], obj, limit);
+          ctx.body = res;
+          Cache.create({ projectId, version, path, res, method });
+          console.log('errxxx');
+        }
+        catch (err) {
+          console.log(err);
+          ctx.body = { code: 245 };
+        }
       }
       else {
         ctx.body = {
