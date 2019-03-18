@@ -1,8 +1,5 @@
 
-// import { isObject, isArray } from 'lodash';
-const { isObject, isArray } = require('lodash');
-const fs = require('fs');
-const swagger = require('./attack.json');
+import { isObject, isArray } from 'lodash';
 
 const getApis = (paths, definitions) => {
   if (isArray(paths)) {
@@ -18,22 +15,21 @@ const getApis = (paths, definitions) => {
       else {
         objs[key] = transFrom(paths[key], definitions, key);
       }
-
     }
     return objs;
   }
 
 };
 
-const transFrom = (arg, definitions, key) => {
+const transFrom = (arg, definitions: object, key?: string) => {
   return isArray(arg) ? transformArray(arg, definitions) :
     isObject(arg) ? transformObject(arg, definitions, key) :
-    transformOther(arg, definitions);
+    transformString(arg, definitions);
 };
 
-const transformArray = (arr, definitions) => arr.map(i => (isObject(i) ? getApis(i, definitions) : i));
+const transformArray = (arr: any[], definitions: object) => arr.map(i => (isObject(i) ? getApis(i, definitions) : i));
 
-const transformObject = (obj, definitions, key) => {
+const transformObject = (obj: object, definitions: object, key: string) => {
   let newKey = key;
   let arrKey = Object.keys(obj);
   let needDef = arrKey.includes('$ref') && arrKey.length === 1;
@@ -44,15 +40,12 @@ const transformObject = (obj, definitions, key) => {
   return getApis(objs, definitions);
 };
 
-const transformOther = (str, definitions) => {
+const transformString = (str: string, definitions: object) => {
   let needTransform = typeof str === 'string' && /\#\/definitions/.test(str);
   let newKey = needTransform ? str.replace('#/definitions/', '') : '';
   let objs = needTransform ? getApis(definitions[newKey], definitions) : str;
   return objs;
 };
 
-let obj = getApis(swagger.paths, swagger.definitions);
-let str = JSON.stringify(obj, null, 2);
-fs.writeFileSync('xxtst.json', str);
 
-// export default getApis;
+export default getApis;
