@@ -4,7 +4,14 @@ import { isUndefined } from 'lodash';
 
 const Random = mockjs.Random;
 
-const mockFn = key => Random[key]();
+const mockFn = key => {
+  try {
+    return Random[key]();
+  }
+  catch (err) {
+    return Random['string']();
+  }
+};
 
 const otherArr = ['object', 'array'];
 
@@ -39,7 +46,7 @@ const translateArg = (obj: object, key: string, arg: object) => {
     return Random.integer(40, 100);
   }
   else {
-    let kind = obj['kind'] ? obj['kind'] : obj['type'];
+    let kind = obj['kind'] ? obj['kind'] : obj['type'] ? obj['type'] : 'string';
     if (kind === 'date') {
       return getTime();
     }

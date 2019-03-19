@@ -13,7 +13,7 @@ import getPaths from '../utils/getPaths';
 import unfoldPath from '../utils/unfoldPaths';
 import Tag from '../models/Tag';
 import addApi from '../actions/addApi';
-import api from './api';
+// import api from './api';
 
 const mock = new Router({ prefix: 'mock' });
 
@@ -151,12 +151,11 @@ mock.all('/:projectId/:version/:path\*', async ctx => {
   let path: string = '/' + ctx.params['path'];
   let method = ctx.method.toLowerCase();
   let headerArg = ctx.header;
-
   try {
     let apiData = await Api.findOne({ blongTo: projectId, version, method, path });
-    let obj = ctx.request.body;
+    let obj = { ...ctx.request.body, ...ctx.query };
 
-    let limit = obj['limit'] || 1;
+    let limit = Number(obj['limit']) || 1;
     if (apiData) {
       //检查必须的参数
 
@@ -164,18 +163,10 @@ mock.all('/:projectId/:version/:path\*', async ctx => {
       let array = checkArg(apiData['req'], arr);
       if (array.length === 0) {
         let key = getKey({ projectId, version, path, method });
-        try {
-          let haveCache = await getCache(key);
-          console.log('haveCache', haveCache, obj);
-          let res = haveCache ? haveCache : mockRes(apiData['res'], obj, limit);
-          ctx.body = res;
-          Cache.create({ projectId, version, path, res, method });
-          console.log('errxxx');
-        }
-        catch (err) {
-          console.log(err);
-          ctx.body = { code: 245 };
-        }
+        let haveCache = await getCache(key);
+        let res = haveCache ? haveCache : mockRes(apiData['res'], obj, limit);
+        ctx.body = res;
+        Cache.create({ projectId, version, path, res, method });
       }
       else {
         ctx.body = {

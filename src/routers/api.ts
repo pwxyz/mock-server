@@ -63,7 +63,7 @@ api.get('/:projectid/:version', async ctx => {
   let data = await Api.find({ blongTo: projectid, version });
   ctx.body = {
     code: data ? 200 : 401,
-    message: data ? '成功': '失败',
+    message: data ? '成功' : '失败',
     data
   };
 });
