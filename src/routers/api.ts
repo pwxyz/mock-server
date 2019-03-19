@@ -8,7 +8,7 @@ import addApi from '../actions/addApi';
 const api = new Router({ prefix: 'api' });
 
 
-//在输入数据中，目前暂不考虑校验数据格式，在生成mock数据时，错误的给出标记即可
+//在输入数据中，目前暂不考虑校验数据格式
 
 api.post('/', async ctx => {
   // let obj = getArg(ctx.request.body, ['res', 'path', 'version', 'method', 'tag', 'req', 'blongTo']);
