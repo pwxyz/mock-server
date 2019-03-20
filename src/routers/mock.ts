@@ -57,7 +57,7 @@ mock.post('/uploads', async ctx => {
   try {
     let path = files['file']['path'];
     let type = files['file']['type'];
-    if (type === 'application/json') {
+    if (type !== 'application/json') {
       ctx.body = {
         code: 402,
         message: '不是json格式'
@@ -158,56 +158,6 @@ submit.onclick = e => {
 // </html>`;
 });
 
-mock.get('/import', async ctx => {
-  let uploadData = fs.readFileSync(`G:/demo/mock-server/src/uploads/upload_39d146be478b6aed4d478dc6629894d8attack.json`, 'utf-8');
-  uploadData = JSON.parse(uploadData);
-  let projectObj = {
-    title: uploadData['info']['title'],
-    version: uploadData['info']['version'] || 'v0.0.1',
-    description: uploadData['info']['description'] || ''
-  };
-
-  let { message, err, data } = await addProject(projectObj);
-  if (err) {
-    ctx.body = {
-      code: 401,
-      message
-    };
-    return;
-  }
-  let tagArg: object[] = uploadData['tags'].map(i => {
-    let item = {};
-    item['name'] = i['description'];
-    item['keys'] = i['name'];
-    item['blongTo'] = data['_id'];
-    item['version'] = projectObj['version'];
-    return item;
-  });
-  await Promise.all(tagArg.map(i => addTag));
-
-  let obj = getPaths(uploadData['paths'], uploadData['definitions']);
-  let arr = unfoldPath(obj);
-  // console.log(arr.length);
-  arr.map(i => {
-    i['blongTo'] = data['_id'];
-    i['version'] = projectObj['version'];
-    i['tag'] = Tag.find({ keys: i['tag'], version: projectObj['version'], blongTo: data['_id'] });
-    return i;
-  });
-  let apiArr = [];
-  for (let i = 0; i < arr.length; i++) {
-    let item = await addApi(arr[i]);
-    if (item.err) {
-      apiArr.push(item);
-    }
-  }
-  ctx.body = {
-    code: 201,
-    message: '成功',
-    apiArr,
-    num: apiArr.length
-  };
-});
 
 mock.all('/:projectId/:version/:path\*', async ctx => {
   let projectId = ctx.params['projectId'];

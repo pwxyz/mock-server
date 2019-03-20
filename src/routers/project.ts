@@ -9,6 +9,7 @@ import getUpdateTime from '../utils/getUpdateTime';
 import checkVersion from '../utils/checkVersion';
 import { last } from 'lodash';
 import addProject from '../actions/addProject';
+import checkLimitAndPage from '../utils/checkLimitAndPage';
 
 const project = new Router({ prefix: 'project' });
 
@@ -21,6 +22,26 @@ project.post('/', async ctx => {
   };
 
 });
+
+project.get('/', async ctx => {
+  let { limit = 50, page = 1 } = ctx.query;
+  let obj = checkLimitAndPage(limit, page);
+  if (obj.err) {
+    ctx.body = {
+      code: 402,
+      message: obj.err
+    };
+    return;
+  }
+  let data = await Project.find().limit(obj.limit).skip(obj.skip);
+  ctx.body = {
+    code: 200,
+    message: '获取成功',
+    data
+  };
+
+});
+
 //增加版本
 project.post('/version', async ctx => {
   let obj = getArg(ctx.request.body, ['version', 'id']);
