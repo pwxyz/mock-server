@@ -90,15 +90,24 @@ mock.post('/uploads', async ctx => {
       item['version'] = projectObj['version'];
       return item;
     });
-    await Promise.all(tagArg.map(i => addTag));
+    let newTagArr = await Promise.all(tagArg.map(i => addTag(i)));
 
     let obj = getPaths(uploadData['paths'], uploadData['definitions']);
     let arr = unfoldPath(obj);
     // console.log(arr.length);
+    const getApiTag = (obj, name) => obj && obj['data'] && obj['data']['keys'] === name;
+
     arr.map(i => {
       i['blongTo'] = data['_id'];
       i['version'] = projectObj['version'];
-      i['tag'] = Tag.find({ keys: i['tag'], version: projectObj['version'], blongTo: data['_id'] });
+      i['tag'] = newTagArr.filter(items => getApiTag(items, i['tag'])).map(item => {
+        let obj = {};
+        obj['name'] = item.data['name'];
+        obj['keys'] = item.data['keys'];
+        obj['id'] = item.data['_id'];
+        return obj;
+      })[0];
+
       return i;
     });
     let apiArr = [];
@@ -112,6 +121,8 @@ mock.post('/uploads', async ctx => {
       code: 201,
       message: '成功',
       apiArr,
+      arr,
+      newTagArr,
       num: apiArr.length
     };
     delFile(path);

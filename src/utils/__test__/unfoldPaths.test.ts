@@ -58,7 +58,7 @@ it('test unfoldPaths', () => {
   let objArg = unfoldPaths(obj)[0];
   expect(objArg.path).toEqual('/login');
   expect(objArg.method).toEqual('get');
-  expect(objArg.tag).toEqual(['strategy']);
+  expect(objArg.tag).toEqual('strategy');
   expect(objArg.description).toEqual('获取威胁类型（攻击行为）');
   expect(objArg.req).toEqual([
     {

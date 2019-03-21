@@ -7,7 +7,7 @@ const unfoldPaths = (obj: object) => {
       let newObj = obj[key][keys];
       i['path'] = key;
       i['method'] = keys;
-      i['tag'] = newObj['tags'];
+      i['tag'] = newObj['tags'][0];
       i['description'] = newObj['description'];
       i['req'] = newObj['parameters'];
       i['res'] = newObj['responses']['200']['schema']['properties'];

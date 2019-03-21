@@ -37,7 +37,9 @@ project.get('/', async ctx => {
   ctx.body = {
     code: 200,
     message: '获取成功',
-    data
+    payload: {
+      data
+    }
   };
 
 });
@@ -92,7 +94,9 @@ project.put('/', async ctx => {
     ctx.body = {
       code: 201,
       message: '修改成功',
-      data
+      payload: {
+        data
+      }
     };
   }
   else {

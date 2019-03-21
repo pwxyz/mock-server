@@ -1,0 +1,4502 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "v1.0.0",
+    "title": "安天威胁情报生产系统 threat-info-system"
+  },
+  "basePath": "/api",
+  "tags": [
+    {
+      "name": "overview",
+      "description": "首页"
+    },
+    {
+      "name": "user",
+      "description": "用户相关"
+    },
+    {
+      "name": "detection",
+      "description": "提交任务"
+    },
+    {
+      "name": "sample",
+      "description": "样本"
+    },
+    {
+      "name": "analyse",
+      "description": "分析报告"
+    },
+    {
+      "name": "statistics",
+      "description": "统计分析"
+    },
+    {
+      "name": "check-config",
+      "description": "检测配置"
+    },
+    {
+      "name": "update-config",
+      "description": "升级配置"
+    },
+    {
+      "name": "network-config",
+      "description": "网络配置"
+    },
+    {
+      "name": "sandbox",
+      "description": "沙箱管理"
+    },
+    {
+      "name": "system-log",
+      "description": "系统日志"
+    },
+    {
+      "name": "report",
+      "description": "报告"
+    },
+    {
+      "name": "super-config",
+      "description": "超管配置界面"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/statistics/various": {
+      "get": {
+        "tags": [
+          "statistics"
+        ],
+        "summary": "特征多维度数据统计",
+        "description": "特征多维度数据统计",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/variousGetRes"
+            }
+          }
+        }
+      }
+    },
+    "/super/config": {
+      "get": {
+        "tags": [
+          "super-config"
+        ],
+        "summary": "超管配置-功能设置",
+        "description": "超管配置-功能设置",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": false
+          },
+          {
+            "in": "header",
+            "name": "config_file",
+            "type": "string",
+            "required": false
+          },
+          {
+            "in": "header",
+            "name": "config_mail",
+            "type": "string",
+            "required": false
+          },
+          {
+            "in": "header",
+            "name": "config_zip",
+            "type": "string",
+            "required": false
+          },
+          {
+            "in": "header",
+            "name": "config_url",
+            "type": "string",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/commonRes"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "super-config"
+        ],
+        "summary": "超管配置-功能设置",
+        "description": "超管配置-功能设置",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": false
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/superConfigPostReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/commonRes"
+            }
+          }
+        }
+      }
+    },
+    "/super/view": {
+      "post": {
+        "tags": [
+          "super-config"
+        ],
+        "summary": "超管配置-界面设置",
+        "description": "超管配置-界面设置",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": false
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/superViewPostReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/commonRes"
+            }
+          }
+        }
+      }
+    },
+    "/configuration/check": {
+      "post": {
+        "tags": [
+          "check-config"
+        ],
+        "summary": "沙箱动态行为分析",
+        "description": "沙箱动态行为分析",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": false
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/checkPostReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/commonRes"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "check-config"
+        ],
+        "summary": "沙箱动态行为分析",
+        "description": "沙箱动态行为分析",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/checkGetRes"
+            }
+          }
+        }
+      }
+    },
+    "/configuration/email": {
+      "post": {
+        "tags": [
+          "check-config"
+        ],
+        "summary": "邮件检测设置",
+        "description": "邮件检测设置",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": false
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/emailPostReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/commonRes"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "check-config"
+        ],
+        "summary": "邮件检测设置",
+        "description": "邮件检测设置",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/emailGetRes"
+            }
+          }
+        }
+      }
+    },
+    "/configuration/repeat": {
+      "put": {
+        "tags": [
+          "check-config"
+        ],
+        "summary": "重复样本检测设置",
+        "description": "重复样本检测设置",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": false
+          },
+          {
+            "in": "header",
+            "name": "repeat",
+            "type": "string",
+            "description": "是否允许检测重复提交的样本",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/commonRes"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "check-config"
+        ],
+        "summary": "重复样本检测设置",
+        "description": "重复样本检测设置",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/repeatGetRes"
+            }
+          }
+        }
+      }
+    },
+    "/configuration/pushreport": {
+      "put": {
+        "tags": [
+          "check-config"
+        ],
+        "summary": "报告推送设置",
+        "description": "报告推送设置",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": false
+          },
+          {
+            "in": "header",
+            "name": "push",
+            "type": "string",
+            "description": "需先实现回推接口",
+            "required": false
+          },
+          {
+            "in": "header",
+            "name": "address",
+            "type": "string",
+            "description": "分析报告推送地址",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/commonRes"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "check-config"
+        ],
+        "summary": "报告推送设置",
+        "description": "报告推送设置",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/pushreportGetRes"
+            }
+          }
+        }
+      }
+    },
+    "/configuration/stateip": {
+      "put": {
+        "tags": [
+          "check-config"
+        ],
+        "summary": "态势平台IP",
+        "description": "态势平台IP",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": false
+          },
+          {
+            "in": "header",
+            "name": "ip",
+            "type": "string",
+            "description": "态势平台IP",
+            "required": false
+          },
+          {
+            "in": "header",
+            "name": "port_",
+            "type": "string",
+            "description": "端口",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/commonRes"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "check-config"
+        ],
+        "summary": "态势平台IP",
+        "description": "态势平台IP",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/stateipGetRes"
+            }
+          }
+        }
+      }
+    },
+    "/configuration/version": {
+      "get": {
+        "tags": [
+          "update-config"
+        ],
+        "summary": "系统程序版本",
+        "description": "系统程序版本",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/versionGetRes"
+            }
+          }
+        }
+      }
+    },
+    "/configuration/update/online": {
+      "post": {
+        "tags": [
+          "update-config"
+        ],
+        "summary": "在线升级",
+        "description": "在线升级",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/onlinePostReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/commonRes"
+            }
+          }
+        }
+      }
+    },
+    "/configuration/update/local": {
+      "get": {
+        "tags": [
+          "update-config"
+        ],
+        "summary": "本地升级 比较MD5",
+        "description": "本地升级 比较MD5",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/localUpdateGetRes"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "update-config"
+        ],
+        "summary": "本地升级 创建上传任务",
+        "description": "本地升级 创建上传任务",
+        "consumes": [
+          "application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/localUpdateReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/commonRes"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "update-config"
+        ],
+        "summary": "本地升級傳輸数据块",
+        "description": "本地升級傳輸数据块",
+        "consumes": [
+          "application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "chunk",
+            "type": "file",
+            "required": true,
+            "description": "chunk内容 二进制"
+          },
+          {
+            "in": "formData",
+            "name": "currentChunk",
+            "type": "integer",
+            "required": true,
+            "description": "标记当前chunk的索引"
+          },
+          {
+            "in": "formData",
+            "name": "md5",
+            "type": "string",
+            "required": true,
+            "description": "传输任务的MD5"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/commonRes"
+            }
+          }
+        }
+      }
+    },
+    "/configuration/update/local/merge": {
+      "get": {
+        "tags": [
+          "update-config"
+        ],
+        "summary": "合并文件并更新",
+        "description": "合并文件并更新",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "md5",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "fileName",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/commonRes"
+            }
+          }
+        }
+      }
+    },
+    "/configuration/update/log": {
+      "get": {
+        "tags": [
+          "update-config"
+        ],
+        "summary": "登录日志",
+        "description": "登录日志",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": true,
+            "type": "integer",
+            "description": "分页查询是限制每页的数量 结合page计算出所需要的数据索引范围 例： limit=20 page=2 应返回第21到第40数据"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "required": true,
+            "type": "integer",
+            "description": "分页查询是限制每页的数量 结合limit计算出所需要的数据索引范围 例： limit=20 page=2 应返回第21到第40数据"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/logGetRes"
+            }
+          }
+        }
+      }
+    },
+    "/configuration/network": {
+      "get": {
+        "tags": [
+          "network-config"
+        ],
+        "summary": "获取网络配置",
+        "description": "获取网络配置",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/networkGetRes"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "network-config"
+        ],
+        "summary": "修改网络配置",
+        "description": "修改网络配置",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/netWorkPutReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/commonRes"
+            }
+          }
+        }
+      }
+    },
+    "/report": {
+      "get": {
+        "tags": [
+          "report"
+        ],
+        "summary": "获取报告",
+        "description": "获取报告",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "userKey",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "md5",
+            "required": true,
+            "type": "string",
+            "description": "样本文件的md5"
+          },
+          {
+            "in": "query",
+            "name": "taskId",
+            "required": true,
+            "type": "integer",
+            "description": "分析任务唯一标识"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/reportGetRes"
+            }
+          }
+        }
+      }
+    },
+    "/report/export": {
+      "post": {
+        "tags": [
+          "report"
+        ],
+        "summary": "导出报告",
+        "description": "导出报告",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/exportReportReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/exportReportRes"
+            }
+          }
+        }
+      }
+    },
+    "/report/email": {
+      "get": {
+        "tags": [
+          "report"
+        ],
+        "summary": "获取邮件报告",
+        "description": "获取邮件报告",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "userKey",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "md5",
+            "required": true,
+            "type": "string",
+            "description": "样本文件的md5"
+          },
+          {
+            "in": "query",
+            "name": "taskId",
+            "required": true,
+            "type": "integer",
+            "description": "分析任务唯一标识"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/emailreportGetRes"
+            }
+          }
+        }
+      }
+    },
+    "/detection/option": {
+      "get": {
+        "tags": [
+          "detection"
+        ],
+        "summary": "获取检测的接口可选参数",
+        "description": "获取检测的接口可选参数",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/detectionOptionGetRes"
+            }
+          }
+        }
+      }
+    },
+    "/detection": {
+      "get": {
+        "tags": [
+          "detection"
+        ],
+        "summary": "获取提交的任务列表",
+        "description": "获取提交的任务列表",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "userKey",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "description": "分页查询是限制每页的数量 结合page计算出所需要的数据索引范围 例： limit=20 page=2 应返回第21到第40数据"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer",
+            "description": "分页查询是限制每页的数量 结合limit计算出所需要的数据索引范围 例： limit=20 page=2 应返回第21到第40数据"
+          },
+          {
+            "in": "query",
+            "name": "taskId",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "md5",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/detectionGetRes"
+            }
+          }
+        }
+      }
+    },
+    "/detection/schedule": {
+      "get": {
+        "tags": [
+          "detection"
+        ],
+        "summary": "获取执行和待执行的任务数",
+        "description": "获取执行和待执行的任务数",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/detectionScheduleGetRes"
+            }
+          }
+        }
+      }
+    },
+    "/detection/file": {
+      "post": {
+        "tags": [
+          "detection"
+        ],
+        "summary": "根据文件md5直接创建样本分析任务（无需上传样本，直接使用样本库内已存在的样本md5）",
+        "description": "根据文件md5直接创建样本分析任务（无需上传样本，直接使用样本库内已存在的样本md5）",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/detectionPostReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/commonRes"
+            }
+          }
+        }
+      }
+    },
+    "/detection/url": {
+      "post": {
+        "tags": [
+          "detection"
+        ],
+        "summary": "根据url创建检测任务",
+        "description": "根据url创建检测任务",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/detectionUrlPostReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/commonRes"
+            }
+          }
+        }
+      }
+    },
+    "/sandbox/device": {
+      "get": {
+        "tags": [
+          "sandbox"
+        ],
+        "summary": "获取沙箱设备信息",
+        "description": "获取沙箱设备信息",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": true,
+            "type": "integer",
+            "description": "分页查询是限制每页的数量 结合page计算出所需要的数据索引范围 例： limit=20 page=2 应返回第21到第40数据"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "required": true,
+            "type": "integer",
+            "description": "分页查询是限制每页的数量 结合limit计算出所需要的数据索引范围 例： limit=20 page=2 应返回第21到第40数据"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/deviceGetRes"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "sandbox"
+        ],
+        "summary": "设备操作",
+        "description": "设备操作",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/devicePutReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/commonRes"
+            }
+          }
+        }
+      }
+    },
+    "/sandbox/device/licence": {
+      "post": {
+        "tags": [
+          "sandbox"
+        ],
+        "summary": "授权设备",
+        "description": "授权设备",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/licencePutReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/commonRes"
+            }
+          }
+        }
+      }
+    },
+    "/sandbox/vm": {
+      "get": {
+        "tags": [
+          "sandbox"
+        ],
+        "summary": "获取沙箱虚拟机设信息",
+        "description": "获取虚拟机设备信息",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "description": "分页查询是限制每页的数量 结合page计算出所需要的数据索引范围 例： limit=20 page=2 应返回第21到第40数据"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer",
+            "description": "分页查询是限制每页的数量 结合limit计算出所需要的数据索引范围 例： limit=20 page=2 应返回第21到第40数据"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/vmGetRes"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "sandbox"
+        ],
+        "summary": "沙箱操作",
+        "description": "沙箱操作",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/vmPutReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/commonRes"
+            }
+          }
+        }
+      }
+    },
+    "/user/password": {
+      "put": {
+        "tags": [
+          "user"
+        ],
+        "summary": "修改用户自己本身的密码",
+        "description": "修改用户自己本身的密码",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "登录时必须附带用户账号和密码信息",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/putPasswordRes"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/commonRes"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "初始化密码 （仅管理员有权限初始化其他账号密码）",
+        "description": "初始化密码 （仅管理员有权限初始化其他账号密码）",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "登录时必须附带用户账号和密码信息",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/postPasswordRes"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/commonRes"
+            }
+          }
+        }
+      }
+    },
+    "/user/sign": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "用户登录 获取相应的信息",
+        "description": "用户登录 获取相应的信息",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "登录时必须附带用户账号和密码信息",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/userSignPostReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/userSignPostRes"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "user"
+        ],
+        "summary": "注销用户保存在服务端的客户端信息",
+        "description": "注销用户保存在服务端的客户端信息",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/commonRes"
+            }
+          }
+        }
+      }
+    },
+    "/user": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "获取用户数据列表 仅管理员有权限",
+        "description": "获取用户数据列表 仅管理员有权限",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": true,
+            "type": "integer",
+            "description": "分页查询是限制每页的数量 结合page计算出所需要的数据索引范围 例： limit=20 page=2 应返回第21到第40数据"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "required": true,
+            "type": "integer",
+            "description": "分页查询是限制每页的数量 结合limit计算出所需要的数据索引范围 例： limit=20 page=2 应返回第21到第40数据"
+          },
+          {
+            "in": "query",
+            "name": "userAccount",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "userName",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "role",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/userGetRes"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "创建用户 仅管理员有权限",
+        "description": "获取用户数据列表 仅管理员有权限",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/userPostReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/commonRes"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "user"
+        ],
+        "summary": "修改用户的信息和冻结状态 仅管理员有权限",
+        "description": "修改用户的信息和冻结状态 仅管理员有权限",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/userPutReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/commonRes"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "user"
+        ],
+        "summary": "根据用户账号删除用户，多个用,隔开",
+        "description": "根据用户账号删除用户，多个用,隔开",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "userAccount",
+            "type": "string",
+            "description": "userAccount 多个用，隔开"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/commonRes"
+            }
+          }
+        }
+      }
+    },
+    "/analyse/file": {
+      "get": {
+        "tags": [
+          "analyse"
+        ],
+        "summary": "获取文件相关分析报告",
+        "description": "获取文件相关分析报告",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "userKey",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "description": "分页查询是限制每页的数量 结合page计算出所需要的数据索引范围 例： limit=20 page=2 应返回第21到第40数据"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer",
+            "description": "分页查询是限制每页的数量 结合limit计算出所需要的数据索引范围 例： limit=20 page=2 应返回第21到第40数据"
+          },
+          {
+            "name": "timestampRange",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "description": "筛选时间戳范围 unix时间戳范围 秒 逗号隔开 ",
+            "items": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "fileName",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "md5",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "fileType",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/anaylseFileGetRes"
+            }
+          }
+        }
+      }
+    },
+    "/analyse/url": {
+      "get": {
+        "tags": [
+          "analyse"
+        ],
+        "summary": "获取url相关分析报告",
+        "description": "获取url相关分析报告",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "description": "分页查询是限制每页的数量 结合page计算出所需要的数据索引范围 例： limit=20 page=2 应返回第21到第40数据"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer",
+            "description": "分页查询是限制每页的数量 结合limit计算出所需要的数据索引范围 例： limit=20 page=2 应返回第21到第40数据"
+          },
+          {
+            "name": "timestampRange",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "description": "筛选时间戳范围 unix时间戳范围 秒 逗号隔开 ",
+            "items": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "url",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "judge",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "md5",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "fileType",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/anaylseUrlGetRes"
+            }
+          }
+        }
+      }
+    },
+    "/analyse/mail": {
+      "get": {
+        "tags": [
+          "analyse"
+        ],
+        "summary": "获取mail相关分析报告",
+        "description": "获取mail相关分析报告",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "description": "分页查询是限制每页的数量 结合page计算出所需要的数据索引范围 例： limit=20 page=2 应返回第21到第40数据"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer",
+            "description": "分页查询是限制每页的数量 结合limit计算出所需要的数据索引范围 例： limit=20 page=2 应返回第21到第40数据"
+          },
+          {
+            "name": "timestampRange",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "description": "筛选时间戳范围 unix时间戳范围 秒 逗号隔开 ",
+            "items": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "emailTheme",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "threatType",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "fileMd5",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "senderAccount",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "receiverAccount",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/mailGetRes"
+            }
+          }
+        }
+      }
+    },
+    "/statistics/threat": {
+      "get": {
+        "tags": [
+          "statistics"
+        ],
+        "summary": "获取威胁统计数据",
+        "description": "获取威胁统计数据",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/statisticsThreatGetRes"
+            }
+          }
+        }
+      }
+    },
+    "/statistics/report": {
+      "get": {
+        "tags": [
+          "statistics"
+        ],
+        "summary": "获取报告统计数据",
+        "description": "获取报告统计数据",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/statisticsReportGetRes"
+            }
+          }
+        }
+      }
+    },
+    "/statistics/file": {
+      "get": {
+        "tags": [
+          "statistics"
+        ],
+        "summary": "获取文件分析统计数据",
+        "description": "获取文件分析统计数据",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/statisticsFileGetRes"
+            }
+          }
+        }
+      }
+    },
+    "/threat-info": {
+      "get": {
+        "tags": [
+          "overview"
+        ],
+        "summary": "病毒播报",
+        "description": "病毒播报",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/threatInfoGetRes"
+            }
+          }
+        }
+      }
+    },
+    "/system-log/login": {
+      "get": {
+        "tags": [
+          "system-log"
+        ],
+        "summary": "登录日志",
+        "description": "登录日志",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "description": "分页查询是限制每页的数量 结合page计算出所需要的数据索引范围 例： limit=20 page=2 应返回第21到第40数据"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer",
+            "description": "分页查询是限制每页的数量 结合limit计算出所需要的数据索引范围 例： limit=20 page=2 应返回第21到第40数据"
+          },
+          {
+            "name": "timestampRange",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "description": "筛选时间戳范围 unix时间戳范围 秒 逗号隔开 "
+          },
+          {
+            "in": "query",
+            "name": "userAccount",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "loginIp",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "loginStatus",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/loginLogGetRes"
+            }
+          }
+        }
+      }
+    },
+    "/system-log/login/export": {
+      "post": {
+        "tags": [
+          "system-log"
+        ],
+        "summary": "导出登录日志",
+        "description": "导出登录日志",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/loginLogExportPostReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/exportRes"
+            }
+          }
+        }
+      }
+    },
+    "/user/verification-code": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "获取验证码",
+        "description": "获取验证码",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/verificationCodeGetRes"
+            }
+          }
+        }
+      }
+    },
+    "/analyse/file/epxort": {
+      "post": {
+        "tags": [
+          "analyse"
+        ],
+        "summary": "导出样本报告",
+        "description": "导出样本报告",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/analyseFileExportPostReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/exportRes"
+            }
+          }
+        }
+      }
+    },
+    "/sample/file/exist": {
+      "get": {
+        "tags": [
+          "sample"
+        ],
+        "summary": "根据md5查看样本库内是否存在该样本",
+        "description": "根据md5查看样本库内是否存该样本",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "md5",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/sampleCheckRes"
+            }
+          }
+        }
+      }
+    },
+    "/sample/file": {
+      "get": {
+        "tags": [
+          "sample"
+        ],
+        "summary": "根据md5 获取用户未上传完成的样本",
+        "description": "根据md5 获取用户未上传完成的样本",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "md5",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/userSpilitUploadCheckRes"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "sample"
+        ],
+        "summary": "创建上传样本任务",
+        "description": "创建上传样本任务",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/postDetectionFileReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/commonRes"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "sample"
+        ],
+        "summary": "上传样本chunk",
+        "description": "上传样本chunk",
+        "consumes": [
+          "application/json",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "description": "用户验证用户请求权限的密令",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "chunk",
+            "required": true,
+            "type": "file"
+          },
+          {
+            "in": "formData",
+            "name": "currentChunkIndex",
+            "type": "integer",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "md5",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/commonRes"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "variousGetRes": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/status"
+        },
+        "message": {
+          "$ref": "#/definitions/message"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "trojanHorse": {
+              "type": "integer",
+              "description": "可识别木马家族数量"
+            },
+            "shellType": {
+              "type": "integer",
+              "description": "可识别壳种类数量"
+            },
+            "blackHorse": {
+              "type": "integer",
+              "description": "可识别黑hash数量"
+            },
+            "C2": {
+              "type": "integer",
+              "description": "可识别C2数量"
+            },
+            "familyVariant": {
+              "type": "integer",
+              "description": "可识别家族变种数量"
+            },
+            "compiler": {
+              "type": "integer",
+              "description": "可识别编译器数量"
+            },
+            "whiteHorse": {
+              "type": "integer",
+              "description": "可识别白hash数量"
+            },
+            "fileFormats": {
+              "type": "integer",
+              "description": "支持分析文件格式数量"
+            },
+            "communicateFeatures": {
+              "type": "integer",
+              "description": "通信特征可检测家族数量"
+            }
+          }
+        }
+      }
+    },
+    "stateipGetRes": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/status"
+        },
+        "message": {
+          "$ref": "#/definitions/message"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "ip": {
+              "type": "string"
+            },
+            "port_": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "localUpdateGetRes": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/status"
+        },
+        "message": {
+          "$ref": "#/definitions/message"
+        },
+        "payload": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "md5": {
+                "type": "string"
+              },
+              "currentChunk": {
+                "type": "string"
+              },
+              "chunkCount": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "localUpdateReq": {
+      "type": "object",
+      "properties": {
+        "chunkCount": {
+          "type": "integer"
+        },
+        "chunkSize": {
+          "type": "integer"
+        },
+        "fileName": {
+          "type": "string"
+        },
+        "fileSize": {
+          "type": "integer"
+        },
+        "md5": {
+          "type": "string"
+        }
+      }
+    },
+    "superViewPostReq": {
+      "type": "object",
+      "properties": {
+        "logo": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "superConfigPostReq": {
+      "type": "object",
+      "properties": {
+        "config_file": {
+          "type": "string"
+        },
+        "config_mail": {
+          "type": "string"
+        },
+        "config_zip": {
+          "type": "string"
+        },
+        "config_url": {
+          "type": "string"
+        }
+      }
+    },
+    "pushreportGetRes": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/status"
+        },
+        "message": {
+          "$ref": "#/definitions/message"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "push": {
+              "type": "string"
+            },
+            "address": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "repeatGetRes": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/status"
+        },
+        "message": {
+          "$ref": "#/definitions/message"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "repeat": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "emailGetRes": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/status"
+        },
+        "message": {
+          "$ref": "#/definitions/message"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "emltype": {
+              "type": "string"
+            },
+            "emlserver": {
+              "type": "string"
+            },
+            "ssl": {
+              "type": "string"
+            },
+            "port": {
+              "type": "string"
+            },
+            "emlaccount": {
+              "type": "string"
+            },
+            "password": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "checkGetRes": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/status"
+        },
+        "message": {
+          "$ref": "#/definitions/message"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "check": {
+              "type": "string"
+            },
+            "range": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "ip": {
+      "type": "string",
+      "description": "ip",
+      "example": "172.31.50.167"
+    },
+    "netWorkPutReq": {
+      "type": "object",
+      "properties": {
+        "dns": {
+          "$ref": "#/definitions/ip"
+        },
+        "adapter": {
+          "$ref": "#/definitions/adparterPutItem"
+        }
+      }
+    },
+    "adparterPutItem": {
+      "type": "object",
+      "properties": {
+        "adapterName": {
+          "type": "string"
+        },
+        "adapterMac": {
+          "type": "string"
+        },
+        "adapterIp": {
+          "type": "string"
+        },
+        "adapterMas": {
+          "type": "string"
+        },
+        "adapterGW": {
+          "type": "string"
+        },
+        "defaultRoute": {
+          "type": "integer",
+          "enum": [
+            1,
+            0
+          ]
+        }
+      }
+    },
+    "networkGetRes": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/status"
+        },
+        "message": {
+          "$ref": "#/definitions/message"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "dns": {
+              "$ref": "#/definitions/ip"
+            },
+            "adapterList": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/adpaterItem"
+              }
+            }
+          }
+        }
+      }
+    },
+    "adpaterItem": {
+      "type": "object",
+      "properties": {
+        "adapterName": {
+          "type": "string"
+        },
+        "adapterMac": {
+          "type": "string"
+        },
+        "adapterIp": {
+          "type": "string"
+        },
+        "adapterMas": {
+          "type": "string"
+        },
+        "adapterGW": {
+          "type": "string"
+        },
+        "adapterStatus": {
+          "type": "integer",
+          "enum": [
+            1,
+            0
+          ]
+        },
+        "defaultRoute": {
+          "type": "integer",
+          "enum": [
+            1,
+            0
+          ]
+        }
+      }
+    },
+    "logGetRes": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/status"
+        },
+        "message": {
+          "$ref": "#/definitions/message"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "total": {
+              "$ref": "#/definitions/total"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/logItem"
+              }
+            }
+          }
+        }
+      }
+    },
+    "logItem": {
+      "type": "object",
+      "properties": {
+        "updateTime": {
+          "$ref": "#/definitions/timestamp"
+        },
+        "version": {
+          "type": "string",
+          "description": "升级版本"
+        },
+        "status": {
+          "type": "integer",
+          "description": "1/0 升级状态 成功/失败"
+        }
+      }
+    },
+    "onlinePostReq": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "type": "object",
+          "properties": {
+            "serverUrl": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "versionGetRes": {
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/status"
+        },
+        "message": {
+          "$ref": "#/definitions/message"
+        },
+        "paylaod": {
+          "type": "object",
+          "properties": {
+            "version": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "checkPostReq": {
+      "type": "object",
+      "properties": {
+        "check": {
+          "type": "string"
+        },
+        "range": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "emailPostReq": {
+      "type": "object",
+      "properties": {
+        "emltype": {
+          "type": "string"
+        },
+        "emlserver": {
+          "type": "string"
+        },
+        "ssl": {
+          "type": "string"
+        },
+        "port": {
+          "type": "string"
+        },
+        "emlaccount": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "judge": {
+      "type": "integer",
+      "description": "威胁判定 1/-1/0（可疑/威胁/未知）",
+      "enum": [
+        0,
+        1,
+        -1
+      ]
+    },
+    "licencePutReq": {
+      "type": "object",
+      "properties": {
+        "licenceCode": {
+          "type": "string"
+        }
+      }
+    },
+    "mailGetRes": {
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/status"
+        },
+        "message": {
+          "$ref": "#/definitions/message"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "total": {
+              "type": "integer"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "fileMd5": {
+                    "type": "string"
+                  },
+                  "emailTheme": {
+                    "type": "string"
+                  },
+                  "judge": {
+                    "$ref": "#/definitions/judge"
+                  },
+                  "receiverAccount": {
+                    "type": "string"
+                  },
+                  "senderAccount": {
+                    "type": "string"
+                  },
+                  "urlList": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "url": {
+                          "type": "string"
+                        },
+                        "md5": {
+                          "type": "string"
+                        },
+                        "staticDetection": {
+                          "type": "integer",
+                          "description": "1/0/-1 信任/未知/恶意",
+                          "enum": [
+                            1,
+                            0,
+                            -1
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  "fileList": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "fileName": {
+                          "type": "string"
+                        },
+                        "md5": {
+                          "type": "string"
+                        },
+                        "fileType": {
+                          "type": "string"
+                        },
+                        "fileSize": {
+                          "type": "integer",
+                          "description": "单位 MB"
+                        },
+                        "staticDetection": {
+                          "type": "integer",
+                          "description": "1/0/-1 信任/未知/恶意",
+                          "enum": [
+                            1,
+                            0,
+                            -1
+                          ]
+                        },
+                        "downloadUrl": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "threatType": {
+                    "type": "string"
+                  },
+                  "time": {
+                    "$ref": "#/definitions/timestamp"
+                  },
+                  "downloadUrl": {
+                    "type": "string"
+                  },
+                  "taskId": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "selectableItem": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "描述的文本（在前端部分用于显示用户看到的文本）"
+        },
+        "value": {
+          "type": "string",
+          "description": "用于交互的值（作为选项时，发回后端的真实值）"
+        }
+      }
+    },
+    "detectionOptionGetRes": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/status"
+        },
+        "message": {
+          "$ref": "#/definitions/message"
+        },
+        "payload": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "dataIndex": {
+                "type": "string",
+                "description": "数据项中对应的 key"
+              },
+              "title": {
+                "type": "string",
+                "description": "对应项的说明（用于前端显示）"
+              },
+              "defaultOption": {
+                "type": "string",
+                "description": "默认选中的option的value"
+              },
+              "options": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/selectableItem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "exportReportReq": {
+      "type": "object",
+      "properties": {
+        "taskId": {
+          "type": "integer"
+        }
+      }
+    },
+    "exportReportRes": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/status"
+        },
+        "message": {
+          "$ref": "#/definitions/message"
+        },
+        "payload": {
+          "type": "string",
+          "example": "http://www.baidu.com"
+        }
+      }
+    },
+    "putPasswordRes": {
+      "type": "object",
+      "properties": {
+        "userAccount": {
+          "type": "string"
+        },
+        "userPassword": {
+          "type": "string"
+        },
+        "newUserPassword": {
+          "type": "string"
+        }
+      }
+    },
+    "postPasswordRes": {
+      "type": "object",
+      "properties": {
+        "userAccountList": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "detectionFilePostRes": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/status"
+        },
+        "message": {
+          "$ref": "#/definitions/message"
+        },
+        "payload": {
+          "properties": {
+            "jsonUrl": {
+              "type": "string"
+            },
+            "pdfUrl": {
+              "type": "string"
+            },
+            "zipUrl": {
+              "type": "string"
+            },
+            "taskId": {
+              "type": "integer"
+            },
+            "md5": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "reportGetRes": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/status"
+        },
+        "message": {
+          "$ref": "#/definitions/message"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "reportType": {
+              "type": "string",
+              "description": "报告内容类型",
+              "enum": [
+                "url",
+                "mail",
+                "file"
+              ]
+            },
+            "parent": {
+              "type": "object",
+              "properties": {
+                "taskId": {
+                  "type": "integer"
+                },
+                "md5": {
+                  "type": "string"
+                }
+              }
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "fileName": {
+                    "type": "string"
+                  },
+                  "md5": {
+                    "type": "string"
+                  },
+                  "taskId": {
+                    "type": "integer"
+                  },
+                  "threat": {
+                    "type": "integer",
+                    "description": "威胁判定"
+                  },
+                  "sampleUrl": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "content": {
+              "type": "object",
+              "description": "与旧的追影报告格式一致"
+            }
+          }
+        }
+      }
+    },
+    "emailreportGetRes": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/status"
+        },
+        "message": {
+          "$ref": "#/definitions/message"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "data": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "mailName": {
+                    "type": "string"
+                  },
+                  "mailSize": {
+                    "type": "string"
+                  },
+                  "fileFormats": {
+                    "type": "string"
+                  },
+                  "MD5": {
+                    "type": "string"
+                  },
+                  "time": {
+                    "$ref": "#/definitions/timestamp"
+                  },
+                  "judge": {
+                    "$ref": "#/definitions/judge"
+                  },
+                  "emailTheme": {
+                    "type": "string"
+                  },
+                  "threatCount": {
+                    "type": "integer",
+                    "description": "包含的威胁数量"
+                  },
+                  "receiverAccount": {
+                    "type": "string"
+                  },
+                  "senderAccount": {
+                    "type": "string"
+                  },
+                  "taskId": {
+                    "type": "string"
+                  },
+                  "urlList": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "url": {
+                          "type": "string"
+                        },
+                        "md5": {
+                          "type": "string"
+                        },
+                        "judge": {
+                          "type": "integer",
+                          "description": "1/0/-1 信任/未知/恶意",
+                          "enum": [
+                            1,
+                            0,
+                            -1
+                          ]
+                        },
+                        "threatName": {
+                          "type": "string"
+                        },
+                        "downloadUrl": {
+                          "type": "string"
+                        },
+                        "taskId": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "fileList": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "fileName": {
+                          "type": "string"
+                        },
+                        "md5": {
+                          "type": "string"
+                        },
+                        "fileType": {
+                          "type": "string"
+                        },
+                        "fileSize": {
+                          "type": "integer",
+                          "description": "单位 MB"
+                        },
+                        "judge": {
+                          "$ref": "#/definitions/judge"
+                        },
+                        "threatName": {
+                          "type": "string"
+                        },
+                        "downloadUrl": {
+                          "type": "string"
+                        },
+                        "taskId": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "detectionUrlPostReq": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string"
+        },
+        "priority": {
+          "$ref": "#/definitions/priority"
+        },
+        "overtime": {
+          "$ref": "#/definitions/overtime"
+        },
+        "envType": {
+          "type": "string"
+        }
+      }
+    },
+    "detectionPostReq": {
+      "type": "object",
+      "properties": {
+        "md5": {
+          "type": "string"
+        },
+        "priority": {
+          "$ref": "#/definitions/priority"
+        },
+        "overtime": {
+          "$ref": "#/definitions/overtime"
+        },
+        "envType": {
+          "type": "string"
+        },
+        "fileName": {
+          "type": "string"
+        }
+      }
+    },
+    "sampleCheckRes": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/status"
+        },
+        "message": {
+          "$ref": "#/definitions/message"
+        },
+        "payload": {
+          "type": "integer",
+          "description": "1为样本已存在 0为样本不存在",
+          "enum": [
+            1,
+            0
+          ]
+        }
+      }
+    },
+    "userSpilitUploadCheckRes": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/status"
+        },
+        "message": {
+          "$ref": "#/definitions/message"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "hasUploadTask": {
+              "type": "integer",
+              "description": "是否存在上传未完全的样本 1/0",
+              "enum": [
+                1,
+                0
+              ]
+            },
+            "currentChunkIndex": {
+              "type": "integer",
+              "description": "若存在该未上传的样本 返回 已上传完毕的最后一个chunk索引"
+            }
+          }
+        }
+      }
+    },
+    "postDetectionFileReq": {
+      "type": "object",
+      "properties": {
+        "md5": {
+          "type": "string"
+        },
+        "chunkSize": {
+          "type": "integer",
+          "description": "chunk的大小 单位MB"
+        },
+        "chunkCount": {
+          "type": "integer",
+          "description": "chunk的个数"
+        },
+        "fileName": {
+          "type": "string"
+        },
+        "fileSize": {
+          "type": "integer",
+          "description": "样本文件总大小 单位MB"
+        }
+      }
+    },
+    "analyseFileExportPostReq": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "taskId": {
+            "type": "integer"
+          },
+          "md5": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "verificationCodeGetRes": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/status"
+        },
+        "message": {
+          "$ref": "#/definitions/message"
+        },
+        "payload": {
+          "type": "string"
+        }
+      }
+    },
+    "exportRes": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/status"
+        },
+        "message": {
+          "$ref": "#/definitions/message"
+        },
+        "payload": {
+          "type": "string",
+          "example": "www.baidu.com"
+        }
+      }
+    },
+    "loginLogExportPostReq": {
+      "type": "object",
+      "properties": {
+        "limit": {
+          "$ref": "#/definitions/limit"
+        },
+        "page": {
+          "$ref": "#/definitions/page"
+        },
+        "userAccount": {
+          "$ref": "#/definitions/userAccount"
+        },
+        "loginIp": {
+          "type": "string"
+        },
+        "loginTime": {
+          "$ref": "#/definitions/timestamp"
+        },
+        "loginStatus": {
+          "type": "integer",
+          "enum": [
+            -1,
+            1
+          ]
+        }
+      }
+    },
+    "loginLogGetRes": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/status"
+        },
+        "message": {
+          "$ref": "#/definitions/message"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "total": {
+              "$ref": "#/definitions/total"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/loginLog"
+              }
+            }
+          }
+        }
+      }
+    },
+    "loginLog": {
+      "type": "object",
+      "properties": {
+        "userAccount": {
+          "$ref": "#/definitions/userAccount"
+        },
+        "loginIp": {
+          "type": "string"
+        },
+        "loginTime": {
+          "$ref": "#/definitions/timestamp"
+        },
+        "loginStatus": {
+          "type": "integer",
+          "enum": [
+            -1,
+            1
+          ]
+        },
+        "message": {
+          "$ref": "#/definitions/message"
+        }
+      }
+    },
+    "threatInfoGetRes": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/status"
+        },
+        "message": {
+          "$ref": "#/definitions/message"
+        },
+        "paylaod": {
+          "type": "object",
+          "properties": {
+            "total": {
+              "$ref": "#/definitions/total"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "md5": {
+                    "$ref": "#/definitions/md5"
+                  },
+                  "threatName": {
+                    "type": "string"
+                  },
+                  "taskId": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "statisticsReportGetRes": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/status"
+        },
+        "message": {
+          "$ref": "#/definitions/message"
+        },
+        "payload": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "timestamp": {
+                "$ref": "#/definitions/timestamp"
+              },
+              "count": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      }
+    },
+    "statisticsThreatGetRes": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/status"
+        },
+        "message": {
+          "$ref": "#/definitions/message"
+        },
+        "payload": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "timestamp": {
+                "$ref": "#/definitions/timestamp"
+              },
+              "count": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      }
+    },
+    "statisticsFileGetRes": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/status"
+        },
+        "message": {
+          "$ref": "#/definitions/message"
+        },
+        "payload": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "suffix": {
+                "type": "string"
+              },
+              "count": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      }
+    },
+    "statisticsGetRes": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/status"
+        },
+        "message": {
+          "$ref": "#/definitions/message"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "report": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "timestamp": {
+                    "$ref": "#/definitions/timestamp"
+                  },
+                  "count": {
+                    "type": "integer"
+                  }
+                }
+              }
+            },
+            "threat": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "timestamp": {
+                    "$ref": "#/definitions/timestamp"
+                  },
+                  "count": {
+                    "type": "integer"
+                  }
+                }
+              }
+            },
+            "fileType": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "suffix": {
+                    "type": "string"
+                  },
+                  "count": {
+                    "type": "integer"
+                  }
+                }
+              }
+            },
+            "sampleType": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "description": "样本类型 url file"
+                  },
+                  "count": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "anaylseUrlGetRes": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/status"
+        },
+        "message": {
+          "$ref": "#/definitions/message"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "total": {
+              "$ref": "#/definitions/total"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/analyseUrlItem"
+              }
+            }
+          }
+        }
+      }
+    },
+    "analyseUrlItem": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string"
+        },
+        "md5": {
+          "$ref": "#/definitions/md5"
+        },
+        "judge": {
+          "$ref": "#/definitions/judge"
+        },
+        "time": {
+          "$ref": "#/definitions/timestamp"
+        },
+        "taskId": {
+          "type": "integer"
+        }
+      }
+    },
+    "anaylseFileGetRes": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/status"
+        },
+        "message": {
+          "$ref": "#/definitions/message"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "total": {
+              "$ref": "#/definitions/total"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/analyseFileItem"
+              }
+            }
+          }
+        }
+      }
+    },
+    "threatType": {
+      "type": "string",
+      "description": "威胁类型 可枚举 待完善",
+      "enum": [
+        "Worm"
+      ]
+    },
+    "analyseFileItem": {
+      "type": "object",
+      "properties": {
+        "fileName": {
+          "$ref": "#/definitions/fileName"
+        },
+        "md5": {
+          "$ref": "#/definitions/md5"
+        },
+        "fileType": {
+          "$ref": "#/definitions/fileType"
+        },
+        "judge": {
+          "$ref": "#/definitions/judge"
+        },
+        "threatType": {
+          "$ref": "#/definitions/threatType"
+        },
+        "time": {
+          "$ref": "#/definitions/timestamp"
+        },
+        "malCount": {
+          "type": "integer",
+          "description": "恶意数量"
+        },
+        "sampleUrl": {
+          "type": "string"
+        },
+        "taskId": {
+          "type": "integer"
+        }
+      }
+    },
+    "fileType": {
+      "type": "string",
+      "description": "文件类型（待完善）",
+      "enum": [
+        "exe",
+        "doc"
+      ]
+    },
+    "md5": {
+      "type": "string"
+    },
+    "detectionScheduleGetRes": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/status"
+        },
+        "message": {
+          "$ref": "#/definitions/message"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "detecting": {
+              "type": "integer"
+            },
+            "waiting": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    "detectionGetRes": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/status"
+        },
+        "message": {
+          "$ref": "#/definitions/message"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "total": {
+              "$ref": "#/definitions/total"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/detectionItem"
+              }
+            }
+          }
+        }
+      }
+    },
+    "devicePutReq": {
+      "type": "object",
+      "properties": {
+        "operation": {
+          "type": "integer",
+          "description": "1 清除磁盘空间大小",
+          "enum": [
+            1
+          ]
+        }
+      }
+    },
+    "vmPutReq": {
+      "type": "object",
+      "properties": {
+        "vmList": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "vm id"
+          }
+        },
+        "operation": {
+          "type": "integer",
+          "description": "0 关闭虚拟机",
+          "enum": [
+            0
+          ]
+        }
+      }
+    },
+    "vmGetRes": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/status"
+        },
+        "message": {
+          "$ref": "#/definitions/message"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "total": {
+              "$ref": "#/definitions/total"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/vmItem"
+              }
+            }
+          }
+        }
+      }
+    },
+    "deviceGetRes": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/status"
+        },
+        "message": {
+          "$ref": "#/definitions/message"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "total": {
+              "$ref": "#/definitions/total"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/deviceItem"
+              }
+            }
+          }
+        }
+      }
+    },
+    "userPutReq": {
+      "type": "object",
+      "properties": {
+        "userAccount": {
+          "$ref": "#/definitions/userAccount"
+        },
+        "userPassword": {
+          "$ref": "#/definitions/userPassword"
+        },
+        "freeze": {
+          "$ref": "#/definitions/freeze"
+        },
+        "department": {
+          "type": "string",
+          "description": "部门"
+        },
+        "Email": {
+          "type": "string",
+          "description": "邮箱"
+        },
+        "phoneNumber": {
+          "type": "string",
+          "description": "手机号码"
+        },
+        "userName": {
+          "type": "string",
+          "description": "姓名"
+        },
+        "remark": {
+          "type": "string",
+          "description": "备注"
+        }
+      }
+    },
+    "userGetRes": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/status"
+        },
+        "message": {
+          "$ref": "#/definitions/message"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "total": {
+              "$ref": "#/definitions/total"
+            },
+            "data": {
+              "type": "array",
+              "description": "用户数据列表",
+              "items": {
+                "$ref": "#/definitions/user"
+              }
+            }
+          }
+        }
+      }
+    },
+    "commonRes": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/status"
+        },
+        "message": {
+          "$ref": "#/definitions/message"
+        }
+      }
+    },
+    "userSignPostReq": {
+      "type": "object",
+      "properties": {
+        "userAccount": {
+          "$ref": "#/definitions/userAccount"
+        },
+        "userPassword": {
+          "$ref": "#/definitions/userPassword"
+        },
+        "verificationCode": {
+          "type": "string"
+        }
+      }
+    },
+    "userSignPostRes": {
+      "type": "object",
+      "description": "用户登录后获得的信息",
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/status"
+        },
+        "message": {
+          "$ref": "#/definitions/message"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "role": {
+              "$ref": "#/definitions/role"
+            },
+            "token": {
+              "$ref": "#/definitions/token"
+            }
+          }
+        }
+      }
+    },
+    "userPostReq": {
+      "type": "object",
+      "description": "创建用户的数据 仅能创建role为2的用户",
+      "properties": {
+        "role": {
+          "$ref": "#/definitions/role"
+        },
+        "userAccocunt": {
+          "$ref": "#/definitions/userAccount"
+        },
+        "userPassword": {
+          "$ref": "#/definitions/userPassword"
+        },
+        "freeze": {
+          "$ref": "#/definitions/freeze"
+        },
+        "department": {
+          "type": "string",
+          "description": "部门"
+        },
+        "Email": {
+          "type": "string",
+          "description": "邮箱"
+        },
+        "phoneNumber": {
+          "type": "string",
+          "description": "手机号码"
+        },
+        "userName": {
+          "type": "string",
+          "description": "姓名"
+        },
+        "remark": {
+          "type": "string",
+          "description": "备注"
+        }
+      }
+    },
+    "user": {
+      "type": "object",
+      "description": "用户的公开数据",
+      "properties": {
+        "role": {
+          "$ref": "#/definitions/role"
+        },
+        "userAcocunt": {
+          "$ref": "#/definitions/userAccount"
+        },
+        "freeze": {
+          "$ref": "#/definitions/freeze"
+        },
+        "department": {
+          "type": "string",
+          "description": "部门"
+        },
+        "Email": {
+          "type": "string",
+          "description": "邮箱"
+        },
+        "phoneNumber": {
+          "type": "string",
+          "description": "手机号码"
+        },
+        "userName": {
+          "type": "string",
+          "description": "姓名"
+        },
+        "remark": {
+          "type": "string",
+          "description": "备注"
+        },
+        "userKey": {
+          "type": "string"
+        }
+      }
+    },
+    "token": {
+      "type": "string",
+      "description": "根据用户唯一的标志信息生成一个有时效的密令 用户确认用户后续请求的身份 role不为1的用户可重复登录 role为1的用户重复登录会覆盖旧的token"
+    },
+    "role": {
+      "type": "integer",
+      "description": "区分用户身份类型的标志 1表示管理员 2表示普通用户 10表示超级管理员",
+      "enum": [
+        2,
+        1
+      ]
+    },
+    "userAccount": {
+      "type": "string",
+      "description": "用户的账户 全局唯一 创建后不可修改 用于登录和验证最高权限"
+    },
+    "userPassword": {
+      "type": "string",
+      "description": "用户的密码 可以修改 用于登录和验证最高权限"
+    },
+    "freeze": {
+      "type": "integer",
+      "description": "用户是否被冻结",
+      "enum": [
+        1,
+        0
+      ]
+    },
+    "vmStatus": {
+      "type": "integer",
+      "description": "虚拟机运行状态 1/0/-1 运行中/关闭/异常",
+      "enum": [
+        1,
+        0,
+        -1
+      ]
+    },
+    "vmItem": {
+      "type": "object",
+      "properties": {
+        "vmId": {
+          "type": "string",
+          "description": "虚拟机唯一标识"
+        },
+        "vmIp": {
+          "type": "string",
+          "description": "虚拟机IP",
+          "example": "10.150.31.25"
+        },
+        "envType": {
+          "type": "string",
+          "description": "虚拟机操作系统 （可枚举 待完善）",
+          "enum": [
+            "windows7 32"
+          ]
+        },
+        "vmStatus": {
+          "$ref": "#/definitions/vmStatus"
+        }
+      }
+    },
+    "deviceItem": {
+      "type": "object",
+      "properties": {
+        "hostIp": {
+          "type": "string",
+          "description": "主机IP",
+          "example": "10.150.31.25"
+        },
+        "systemTime": {
+          "$ref": "#/definitions/timestamp"
+        },
+        "applicationVersion": {
+          "type": "string",
+          "description": "程序版本"
+        },
+        "cpu": {
+          "$ref": "#/definitions/cpu"
+        },
+        "disk": {
+          "$ref": "#/definitions/disk"
+        },
+        "memory": {
+          "$ref": "#/definitions/memory"
+        },
+        "licence": {
+          "type": "object",
+          "properties": {
+            "auth": {
+              "type": "integer",
+              "description": "1/0 授权/未授权",
+              "enum": [
+                1,
+                0
+              ]
+            },
+            "date": {
+              "type": "integer",
+              "description": "到期时间"
+            }
+          }
+        }
+      }
+    },
+    "cpu": {
+      "type": "integer",
+      "description": "cpu占用率 1-100",
+      "example": 65
+    },
+    "disk": {
+      "type": "object",
+      "description": "磁盘信息 0-100",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "example": 2048,
+          "description": "磁盘总空间 单位MB"
+        },
+        "used": {
+          "type": "integer",
+          "example": 1024,
+          "description": "已占用磁盘空间 单位MB"
+        }
+      }
+    },
+    "detectionItem": {
+      "type": "object",
+      "properties": {
+        "fileName": {
+          "$ref": "#/definitions/fileName"
+        },
+        "priority": {
+          "$ref": "#/definitions/priority"
+        },
+        "time": {
+          "$ref": "#/definitions/timestamp"
+        },
+        "overtime": {
+          "$ref": "#/definitions/overtime"
+        },
+        "detectionStatus": {
+          "$ref": "#/definitions/detectionStatus"
+        },
+        "md5": {
+          "type": "string"
+        },
+        "taskId": {
+          "type": "integer"
+        },
+        "reportUrl": {
+          "type": "string"
+        }
+      }
+    },
+    "memory": {
+      "type": "object",
+      "description": "内存信息 0-100",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "example": 2048,
+          "description": "内存总空间 单位MB"
+        },
+        "used": {
+          "type": "integer",
+          "example": 1024,
+          "description": "已占用内存空间 单位MB"
+        }
+      }
+    },
+    "detectionStatus": {
+      "type": "integer",
+      "description": "检测任务的状态 1/0/-1/2 正常/等待/超时/已完成",
+      "enum": [
+        1,
+        0,
+        -1
+      ]
+    },
+    "overtime": {
+      "type": "integer",
+      "description": "超时时间 单位 秒",
+      "enum": [
+        30,
+        60,
+        90
+      ]
+    },
+    "fileName": {
+      "type": "string"
+    },
+    "priority": {
+      "type": "integer",
+      "description": "优先级",
+      "enum": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "status": {
+      "type": "integer",
+      "example": 1,
+      "description": "标志该请求是否为预期的输出结果 status 1 为正常结果 其他值为非预期结果（文档待补充）"
+    },
+    "limit": {
+      "type": "integer",
+      "description": "分页查询是限制每页的数量 结合page计算出所需要的数据索引范围 例： limit=20 page=2 应返回第21到第40数据"
+    },
+    "page": {
+      "type": "integer",
+      "description": "分页查询时查询的页数 结合limit计算出所需要的数据索引范围 例： limit=20 page=2 应返回第21到第40数据"
+    },
+    "total": {
+      "type": "integer",
+      "example": 10,
+      "description": "根据条件查询到的数据总数（未分页）"
+    },
+    "message": {
+      "type": "string",
+      "description": "错误信息内容"
+    },
+    "timestamp": {
+      "type": "integer",
+      "description": "unix时间戳 精确到秒",
+      "example": 1503642697
+    },
+    "timestampRange": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/timestamp"
+      }
+    }
+  }
+}
