@@ -24,7 +24,7 @@ project.post('/', async ctx => {
 });
 
 project.get('/', async ctx => {
-  let { limit = 50, page = 1 } = ctx.query;
+  let { limit = process.env.LIMIT, page = 1 } = ctx.query;
   let obj = checkLimitAndPage(limit, page);
   if (obj.err) {
     ctx.body = {

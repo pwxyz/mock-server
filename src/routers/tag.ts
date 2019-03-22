@@ -53,12 +53,15 @@ tag.del('/', async ctx => {
   };
 });
 
-tag.get('/x', async ctx => {
-  let data = await Tag.find({ 'test.name': '123' });
+tag.get('/:id/:version', async ctx => {
+  let { id, version } = ctx.params;
+  let data = await Tag.find({ version, blongTo: id });
   ctx.body = {
     code: 200,
     message: data ? '获取成功' : '获取失败',
-    data
+    payload: {
+      data
+    }
   };
 });
 

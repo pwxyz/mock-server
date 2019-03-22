@@ -36,7 +36,8 @@ api.put('/:id', async ctx => {
 
 api.get('/:projectid/:version', async ctx => {
   let { projectid, version } = ctx.params;
-  let { limit = 50, page = 1 } = ctx.query;
+  // eslint-disable-next-line no-undefined
+  let { limit = process.env.LIMIT, page = 1, tag = undefined } = ctx.query;
   let obj = checkLimitAndPage(limit, page);
   if (obj.err) {
     ctx.body = {
@@ -45,9 +46,20 @@ api.get('/:projectid/:version', async ctx => {
     };
     return;
   }
+  let findObj = tag ? { blongTo: projectid, version, 'tag.keys': tag } : { blongTo: projectid, version };
 
-  let data = await Api.find({ blongTo: projectid, version }).limit(obj.limit).skip(obj.skip);
-  let total = await Api.find({ blongTo: projectid, version }).count();
+  let data = await Api.find(findObj).limit(obj.limit).skip(obj.skip).sort('tag.keys');
+  // let data = await Api.aggregate([
+  //   {
+  //     $match: { version, blongTo: projectid }
+  //   },
+  //   {
+  //     $group: {
+  //       _id: '$tag.keys', data: { $push: '$path' }
+  //     }
+  //   }
+  // ]);
+  let total = await Api.find(findObj).count();
   ctx.body = {
     code: data ? 200 : 401,
     message: data ? '成功' : '失败',

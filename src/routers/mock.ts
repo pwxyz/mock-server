@@ -183,10 +183,10 @@ mock.all('/:projectId/:version/:path\*', async ctx => {
     let limit = Number(obj['limit']) || 1;
     if (apiData) {
       //检查必须的参数
-
+      console.log(obj);
       let arr = [...objToArr(headerArg), ...objToArr(obj)];
       let array = checkArg(apiData['req'], arr);
-      if (array.length === 0) {
+      if (array.length === 0 || obj['apimock'] === 'true') {
         let key = getKey({ projectId, version, path, method });
         let haveCache = await getCache(key);
         let res = haveCache ? haveCache : mockRes(apiData['res'], obj, limit);
