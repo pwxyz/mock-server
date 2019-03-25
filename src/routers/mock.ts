@@ -11,7 +11,7 @@ import addProject from '../actions/addProject';
 import addTag from '../actions/addTag';
 import getPaths from '../utils/getPaths';
 import unfoldPath from '../utils/unfoldPaths';
-import Tag from '../models/Tag';
+// import Tag from '../models/Tag';
 import addApi from '../actions/addApi';
 // import api from './api';
 
@@ -43,10 +43,31 @@ mock.post('/config', async ctx => {
 });
 
 mock.get('/cache', async ctx => {
-  let data = await Cache.find().limit(100);
+  // let data = await Cache.find().limit(100);
+  // ctx.body = {
+  //   code: 1,
+  //   message: '获取成功',
+  //   data
+  // };
+  let { projectId, version, path, method } = ctx.query;
+  console.log({ projectId, version, path, method });
+  let key = getKey({ projectId, version, path, method });
+  let data = await getCache(key);
   ctx.body = {
     code: 1,
     message: '获取成功',
+    payload: data ? data : {}
+  };
+});
+
+mock.post('/cache', async ctx => {
+  const obj = getArg(ctx.request.body, ['projectId', 'version', 'path', 'method', 'exprieIn', 'res']);
+  let key = getKey(obj);
+  let isSet = await setCache(key, obj['res'], obj['exprieIn'] = 60);
+  let data = isSet ? await getCache(key) : {};
+  ctx.body = {
+    code: 1,
+    message: isSet ? '设置成功' : '设置失败',
     data
   };
 });

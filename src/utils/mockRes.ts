@@ -6,7 +6,7 @@ const Random = mockjs.Random;
 
 const mockFn = key => {
   try {
-    if(key==='integer'){
+    if (key === 'integer') {
       return Random[key](0, 10000);
     }
     return Random[key]();
@@ -18,7 +18,6 @@ const mockFn = key => {
 
 const otherArr = ['object', 'array'];
 
-const getItemsArg = obj =>  obj['type'] === 'object' ? obj['properties'] : obj['type']
 
 const mockRes = (obj: object, arg: object, limit?: number) => {
   let newObj = {};
@@ -34,13 +33,13 @@ const mockRes = (obj: object, arg: object, limit?: number) => {
       let num = /data/.test(key) && obj[key]['type'] === 'array' ? limit : 1;
       // newObj[key] = [...Array(num)].map(i => mockRes(getItemsArg(obj[key]['items']), arg, limit));
       newObj[key] = [...Array(num)].map(i => {
-        let itemType =  obj[key]['items']['type']
-        if(itemType==='object'){
-          return mockRes(obj[key]['items']['properties'], arg, limit)
+        let itemType =  obj[key]['items']['type'];
+        if (itemType === 'object') {
+          return mockRes(obj[key]['items']['properties'], arg, limit);
         }
-        else return translateArg(obj[key]['items'], key, arg)
-        }
-        );
+        else { return translateArg(obj[key]['items'], key, arg) }
+      }
+      );
     }
   }
   return newObj;
@@ -52,6 +51,9 @@ const getTime = () => {
 };
 
 const translateArg = (obj: object, key: string, arg: object) => {
+  if (!isUndefined(arg[key])) {
+    return arg[key];
+  }
   if (key === 'status') {
     return 1;
   }
@@ -64,7 +66,7 @@ const translateArg = (obj: object, key: string, arg: object) => {
       return getTime();
     }
     else {
-      let value = isUndefined(arg[key]) ? mockFn(kind) : arg[key] + mockFn(kind);
+      let value = mockFn(kind);
       return value;
     }
   }
